@@ -1,28 +1,28 @@
 import { Star, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
-import samplePhoto from '../../../assets/images/hero-doctor.jpg';
+import samplePhoto from '../../../assets/images/hero-host.jpg';
 
 const testimonials = [
   {
     name: 'Robert Fox',
-    role: 'Patient',
+    role: 'PARTICIPATOR',
     image: samplePhoto,
-    quote: 'The care and professionalism I received were outstanding. The doctors were knowledgeable and the staff was incredibly supportive throughout my treatment.',
+    quote: 'The care and professionalism I received were outstanding. The hosts were knowledgeable and the staff was incredibly supportive throughout my treatment.',
     rating: 5,
   },
   {
     name: 'Jane Cooper',
-    role: 'Patient',
+    role: 'PARTICIPATOR',
     image: samplePhoto,     
     quote: 'A seamless experience from booking an appointment to the consultation. The use of technology for prescriptions and follow-ups is very convenient.',
     rating: 5,
   },
   {
     name: 'Wade Warren',
-    role: 'Patient',
+    role: 'PARTICIPATOR',
     image: samplePhoto,     
-    quote: 'I highly recommend their services. The specialists are top-notch, and they truly focus on preventive care which has greatly improved my health.',
+    quote: 'I highly recommend their services. The specialists are top-notch, and they truly focus on preventive care which has greatly improved my EventHub.',
     rating: 5,
   },
 ];
@@ -34,7 +34,7 @@ const Testimonials = () => {
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground">What Our Client Says</h2>
           <p className="text-muted-foreground mt-4">
-            We are committed to providing you with the best medical and healthcare services.
+            We are committed to providing you with the best medical and EventHub services.
           </p>
         </div>
 

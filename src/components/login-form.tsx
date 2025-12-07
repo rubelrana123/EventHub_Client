@@ -1,25 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { loginUser } from "@/services/auth/loginUser";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
+import InputFieldError from "./shared/InputFieldError";
 import { Button } from "./ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 
-const LoginForm = () => {
+const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
 
-  const getFieldError = (fieldName: string) => {
-    if (state && state.errors) {
-      const error = state.errors.find((err: any) => err.field === fieldName);
-      return error.message;
-    } else {
-      return null;
+  useEffect(() => {
+    if (state && !state.success && state.message) {
+      toast.error(state.message);
     }
-  };
-  console.log(state);
+  }, [state]);
+
   return (
     <form action={formAction}>
+      {redirect && <input type="hidden" name="redirect" value={redirect} />}
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">
           {/* Email */}
@@ -30,14 +29,11 @@ const LoginForm = () => {
               name="email"
               type="email"
               placeholder="m@example.com"
+              defaultValue={"admin@gmail.com"}
               //   required
             />
 
-            {getFieldError("email") && (
-              <FieldDescription className="text-red-600">
-                {getFieldError("email")}
-              </FieldDescription>
-            )}
+            <InputFieldError field="email" state={state} />
           </Field>
 
           {/* Password */}
@@ -48,13 +44,10 @@ const LoginForm = () => {
               name="password"
               type="password"
               placeholder="Enter your password"
+              defaultValue={"123456"}
               //   required
             />
-            {getFieldError("password") && (
-              <FieldDescription className="text-red-600">
-                {getFieldError("password")}
-              </FieldDescription>
-            )}
+            <InputFieldError field="password" state={state} />
           </Field>
         </div>
         <FieldGroup className="mt-4">

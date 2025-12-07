@@ -23,7 +23,7 @@ export function PublicFooter() {
               <div className="bg-[#ff4000] p-2 rounded-lg">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
-              <span className="font-bold text-xl">EventPlanner</span>
+              <span className="font-bold text-xl">EventHub</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Create unforgettable experiences with our comprehensive event

@@ -3,14 +3,14 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 
 const steps = [
-  { icon: Search, title: 'Search Doctor', description: 'Find your doctor easily with a minimum of effort.' },
-  { icon: ClipboardList, title: 'Check Doctor Profile', description: 'Get to know your doctor better.' },
-  { icon: CalendarCheck, title: 'Schedule Appointment', description: 'Choose the time and date that suits you.' },
-  { icon: ShieldCheck, title: 'Get Your Solution', description: 'Our doctors are here to help you.' },
+  { icon: Search, title: 'Search Host', description: 'Find your host easily with a minimum of effort.' },
+  { icon: ClipboardList, title: 'Check Host Profile', description: 'Get to know your host better.' },
+  { icon: CalendarCheck, title: 'Schedule Joined', description: 'Choose the time and date that suits you.' },
+  { icon: ShieldCheck, title: 'Get Your Solution', description: 'Our hosts are here to help you.' },
   { icon: FileText, title: 'Electronic prescription', description: 'Get your prescription instantly.' },
-  { icon: Video, title: 'Instant video consultation', description: 'Consult with your doctor from anywhere.' },
+  { icon: Video, title: 'Instant video consultation', description: 'Consult with your host from anywhere.' },
   { icon: CreditCard, title: 'Easy payment options', description: 'Pay with ease using various methods.' },
-  { icon: HeartPulse, title: 'Health recovery', description: 'Start your journey to better health.' },
+  { icon: HeartPulse, title: 'EventHub recovery', description: 'Start your journey to better event.' },
 ];
 
 const StepCard = ({ icon: Icon, title, description, index }: { icon: React.ElementType, title: string, description: string, index: number }) => {

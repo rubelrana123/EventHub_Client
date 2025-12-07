@@ -83,7 +83,7 @@ export default function HomePage() {
       <Hero/>
       <ChooseUS/>
       <PromoBanner/>
-      <FeaturedEvent/>
+      {/* <FeaturedEvent/> */}
         {/* Promo Banner */}
 
         {/* Subscription Section */}
