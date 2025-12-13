@@ -8,8 +8,9 @@ import { UserInfo } from "@/types/user";
  
 import { Bell, Menu, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import UserDropdown from "../UserDropdown";
-import DashboardMobileSidebar from "../DashboardMobileSidebar";
+ 
+import DashboardMobileSidebar from "./DashboardMobileSidebar";
+import UserDropdown from "./UserDropdown";
  
 
 interface DashboardNavbarContentProps {

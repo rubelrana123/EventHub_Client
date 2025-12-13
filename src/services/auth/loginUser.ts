@@ -16,6 +16,7 @@ import { UserRole } from "@/types/user";
 
 
 export const loginUser = async (_currentState: any, formData: any): Promise<any> => {
+   console.log("inner login")
     try {
         const redirectTo = formData.get('redirect') || null;
         let accessTokenObject: null | any = null;
@@ -25,19 +26,21 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             password: formData.get('password'),
         }
 
+        console.log("login form payload form", payload)
+
         if (zodValidator(payload, loginValidationZodSchema).success === false) {
             return zodValidator(payload, loginValidationZodSchema);
         }
 
         const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
-
+       console.log(validatedPayload, "validation form payload");
         const res = await serverFetch.post("/auth/login", {
             body: JSON.stringify(validatedPayload),
             headers: {
                 "Content-Type": "application/json",
             }
         });
-
+       console.log(res, "resposnse login")
         const result = await res.json();
 
         const setCookieHeaders = res.headers.getSetCookie();

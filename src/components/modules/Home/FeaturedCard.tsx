@@ -1,4 +1,5 @@
- "use client"
+"use client";
+
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,36 +9,37 @@ interface Event {
   id: string;
   title: string;
   description: string;
-  bannerPhoto: string;
+  bannerPhoto: string | null;
   dateTime: string;
   location: string;
   minParticipants: number;
   maxParticipants: number;
+  availableSeats: number;
   joiningFee: number;
   eventType: string;
+  status: string;
   hostId: string;
   createdByEmail: string;
-  isDeleted: boolean;
 }
 
-interface EventCardProps {
+interface Props {
   event: Event;
   onEdit?: (event: Event) => void;
   onDelete?: (id: string) => void;
 }
 
-export function EventCard({ event, onEdit, onDelete }: EventCardProps) {
-  const dateObj = new Date(event?.dateTime);
+export function FeaturedEventCard({ event, onEdit, onDelete }: Props) {
+  const date = new Date(event.dateTime);
 
-  const formattedDate = dateObj.toLocaleDateString("en-US", {
+  const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
-    day: "numeric",
+    day: "numeric"
   });
 
-  const formattedTime = dateObj.toLocaleTimeString("en-US", {
+  const formattedTime = date.toLocaleTimeString("en-US", {
     hour: "2-digit",
-    minute: "2-digit",
+    minute: "2-digit"
   });
 
   return (
@@ -46,23 +48,23 @@ export function EventCard({ event, onEdit, onDelete }: EventCardProps) {
       {/* Banner */}
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={event?.bannerPhoto || "/placeholder.png"}
-          alt={event?.title}
+          src={event.bannerPhoto || "/placeholder.png"}
+          alt={event.title}
           width={500}
           height={500}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
         />
 
         <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-[#ff4000] uppercase tracking-wide">
-          {event?.eventType}
+          {event.eventType}
         </div>
 
         <div className="absolute top-4 right-4 bg-[#303030]/80 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-white">
-          ${event?.joiningFee}
+          ${event.joiningFee}
         </div>
       </div>
 
-      {/* Body Content */}
+      {/* Body */}
       <div className="p-6 flex-1 flex flex-col">
         
         {/* Date */}

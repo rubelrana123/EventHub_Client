@@ -78,12 +78,11 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
  
       <main className="flex-grow">
-
-
+ 
       <Hero/>
       <ChooseUS/>
       <PromoBanner/>
-      {/* <FeaturedEvent/> */}
+      <FeaturedEvent/>
         {/* Promo Banner */}
 
         {/* Subscription Section */}
