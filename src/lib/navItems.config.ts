@@ -98,19 +98,19 @@ export const adminNavItems: NavSection[] = [
     items: [
       {
         title: "Admins",
-        href: "/admin/admins",
+        href: "/admin/dashboard/admins-management",
         icon: "Shield",
         roles: ["ADMIN"],
       },
       {
         title: "Hosts",
-        href: "/admin/hosts",
+        href: "/admin/dashboard/hosts-management",
         icon: "UserCheck",
         roles: ["ADMIN"],
       },
       {
         title: "Participators",
-        href: "/admin/participators",
+        href: "/admin/dashboard/participators-management",
         icon: "Users",
         roles: ["ADMIN"],
       },
@@ -121,7 +121,7 @@ export const adminNavItems: NavSection[] = [
     items: [
       {
         title: "Events",
-        href: "/admin/events",
+        href: "/admin/dashboard/events-management",
         icon: "Calendar",
         roles: ["ADMIN"],
       },

@@ -10,4 +10,23 @@ export interface IParticipator {
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
+  reviews: unknown[];
+  eventParticipations: {
+    id: string;
+    joinedAt: string;
+    isBooked: boolean;
+    paymentId: string;
+    event: {
+      id: string;
+      title: string;
+      dateTime: string;
+      location: string;
+      eventType: string;
+      status: string;
+      joiningFee: number;
+      minParticipants: number;
+      maxParticipants: number;
+      availableSeats: number;
+    };
+  }[];
 }

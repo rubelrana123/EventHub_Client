@@ -3,11 +3,10 @@
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
- 
+import EventFormDialog from "./EventsFormDialog";
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader";
-import ParticipatorUpdateDialog from "./ParticipatorsFormDialog";
 
-const ParticipatorsManagementHeader = () => {
+const EventsManagementHeader = () => {
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -32,7 +31,7 @@ const ParticipatorsManagementHeader = () => {
 
   return (
     <>
-      <ParticipatorUpdateDialog
+      <EventFormDialog
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleCloseDialog}
@@ -40,10 +39,10 @@ const ParticipatorsManagementHeader = () => {
       />
 
       <ManagementPageHeader
-        title="Participators Management"
-        description="Manage participator accounts and permissions"
+        title="Events Management"
+        description="Manage event accounts and permissions"
         action={{
-          label: "Add Participator",
+          label: "Add Event",
           icon: Plus,
           onClick: handleOpenDialog,
         }}
@@ -52,4 +51,4 @@ const ParticipatorsManagementHeader = () => {
   );
 };
 
-export default ParticipatorsManagementHeader;
+export default EventsManagementHeader;

@@ -1,3 +1,5 @@
+"use client";
+
 import InputFieldError from "@/components/shared/InputFieldError";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,75 +10,50 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createParticipator, updateParticipator } from "@/services/admin/participatorsManagement";
- 
+import { updateParticipator } from "@/services/admin/participatorsManagement";
 import { IParticipator } from "@/types/participator.type";
- 
-import Image from "next/image";
-import { useActionState, useEffect, useRef, useState } from "react";
+
+import { Textarea } from "@/components/ui/textarea";
+import { useActionState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 
-interface IParticipatorFormDialogProps {
+interface IParticipatorUpdateDialogProps {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  participator?: IParticipator;
+  participator: IParticipator | null;
 }
 
-const ParticipatorFormDialog = ({
+const ParticipatorUpdateDialog = ({
   open,
   onClose,
   onSuccess,
   participator,
-}: IParticipatorFormDialogProps) => {
+}: IParticipatorUpdateDialogProps) => {
   const formRef = useRef<HTMLFormElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const isEdit = !!participator?.id;
-  //   const { isEditMode, state, formAction, isPending } = useParticipatorForm(participator);
 
   const [state, formAction, isPending] = useActionState(
-    isEdit ? updateParticipator.bind(null, participator?.id as string) : createParticipator,
+    updateParticipator.bind(null, participator?.id as string),
     null
   );
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setSelectedFile(file || null);
-  };
-
-  // Handle success/error from server
   useEffect(() => {
     if (state?.success) {
-      toast.success(state.message || "Operation successful");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
+      toast.success(state.message || "Participator updated successfully");
       onSuccess();
       onClose();
     } else if (state?.message && !state.success) {
       toast.error(state.message);
-
-      // Restore file to input after error
-      if (selectedFile && fileInputRef.current) {
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(selectedFile);
-        fileInputRef.current.files = dataTransfer.files;
-      }
     }
-  }, [state, onSuccess, onClose, selectedFile]);
+  }, [state, onClose, onSuccess]);
 
-  const handleClose = () => {
-    setSelectedFile(null);
-    formRef.current?.reset();
-    onClose();
-  };
+  if (!participator) return null;
 
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-h-[90vh] flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4">
-          <DialogTitle>{isEdit ? "Edit Participator" : "Add New Participator"}</DialogTitle>
+          <DialogTitle>Edit Participator</DialogTitle>
         </DialogHeader>
 
         <form
@@ -85,107 +62,106 @@ const ParticipatorFormDialog = ({
           className="flex flex-col flex-1 min-h-0"
         >
           <div className="flex-1 overflow-y-auto px-6 space-y-4 pb-4">
-            {/* Basic Information */}
+            {/* Name */}
             <Field>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
                 id="name"
                 name="name"
                 placeholder="John Doe"
-                defaultValue={state?.formData?.name || participator?.name || ""}
+                defaultValue={state?.formData?.name ?? participator.name}
               />
               <InputFieldError field="name" state={state} />
             </Field>
 
+            {/* Email (read-only) */}
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
                 id="email"
-                name="email"
-                type="email"
-                placeholder="participator@example.com"
-                defaultValue={state?.formData?.email || participator?.email || ""}
-                disabled={isEdit}
+                value={participator.email}
+                disabled
               />
-              <InputFieldError field="email" state={state} />
             </Field>
 
+            {/* Contact Number */}
             <Field>
               <FieldLabel htmlFor="contactNumber">Contact Number</FieldLabel>
               <Input
                 id="contactNumber"
                 name="contactNumber"
-                placeholder="+1234567890"
+                placeholder="017XXXXXXXX"
                 defaultValue={
-                  state?.formData?.contactNumber || participator?.contactNumber || ""
+                  state?.formData?.contactNumber ??
+                  participator.contactNumber ??
+                  ""
                 }
               />
               <InputFieldError field="contactNumber" state={state} />
             </Field>
 
-            {/* Password Field (Create Mode Only) */}
-            {!isEdit && (
-              <Field>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter password"
-                  defaultValue={state?.formData?.password || ""}
-                />
-                <InputFieldError field="password" state={state} />
-              </Field>
-            )}
+            {/* Address */}
+            <Field>
+              <FieldLabel htmlFor="address">Address</FieldLabel>
+              <Input
+                id="address"
+                name="address"
+                placeholder="Dinajpur, Bangladesh"
+                defaultValue={
+                  state?.formData?.address ??
+                  participator.address ??
+                  ""
+                }
+              />
+              <InputFieldError field="address" state={state} />
+            </Field>
 
-            {/* Profile Photo (Create Mode Only) */}
-            {!isEdit && (
-              <Field>
-                <FieldLabel htmlFor="file">Profile Photo</FieldLabel>
-                {selectedFile && (
-                  <div className="mb-2">
-                    <Image
-                      src={URL.createObjectURL(selectedFile)}
-                      alt="Profile Photo Preview"
-                      width={50}
-                      height={50}
-                      className="rounded-full"
-                    />
-                  </div>
-                )}
+            {/* Interests */}
+            <Field>
+              <FieldLabel htmlFor="interests">Interests</FieldLabel>
+              <Input
+                id="interests"
+                name="interests"
+                placeholder="Music, Sports"
+                defaultValue={
+                  state?.formData?.interests ??
+                  participator.interests ??
+                  ""
+                }
+              />
+              <InputFieldError field="interests" state={state} />
+            </Field>
 
-                <Input
-                  ref={fileInputRef}
-                  id="file"
-                  name="file"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  Upload a profile photo for the participator
-                </p>
-                <InputFieldError field="profilePhoto" state={state} />
-              </Field>
-            )}
+            {/* Bio */}
+            <Field>
+              <FieldLabel htmlFor="bio">Bio</FieldLabel>
+              <Textarea
+                id="bio"
+                name="bio"
+                rows={4}
+                placeholder="Short bio about the participator"
+                defaultValue={
+                  state?.formData?.bio ??
+                  participator.bio ??
+                  ""
+                }
+              />
+              <InputFieldError field="bio" state={state} />
+            </Field>
           </div>
 
-          {/* Form Actions */}
+          {/* Actions */}
           <div className="flex justify-end gap-2 px-6 py-4 border-t bg-gray-50">
             <Button
               type="button"
               variant="outline"
-              onClick={handleClose}
+              onClick={onClose}
               disabled={isPending}
             >
               Cancel
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending
-                ? "Saving..."
-                : isEdit
-                ? "Update Participator"
-                : "Create Participator"}
+              {isPending ? "Updating..." : "Update Participator"}
             </Button>
           </div>
         </form>
@@ -194,4 +170,4 @@ const ParticipatorFormDialog = ({
   );
 };
 
-export default ParticipatorFormDialog;
+export default ParticipatorUpdateDialog;
