@@ -13,13 +13,31 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import testData from "../../../../../test";
- 
+import { bookEvent } from "@/services/participator/bookEvent";
+
 export default function EventDetailPage() {
   const { id } = useParams();
+  const [isBooking, setIsBooking] = useState(false);
+
   // Find the event from testData
   const event = testData.data.find((ev) => ev.id === id);
   console.log(id, event, "data from params");
+
+  const handleBookEvent = async () => {
+    setIsBooking(true);
+    try {
+      await bookEvent(id as string);
+      alert("Event booked successfully!");
+      // Optionally, redirect or update UI
+    } catch (error) {
+      alert("Failed to book event. Please try again.");
+      console.error(error);
+    } finally {
+      setIsBooking(false);
+    }
+  };
 
   if (!event) {
     return (
@@ -163,8 +181,12 @@ export default function EventDetailPage() {
                   <strong>{event.availableSeats}</strong>
                 </p>
 
-                <Button className="w-full mb-4 shadow-lg shadow-orange-200">
-                  Book Now
+                <Button
+                  onClick={handleBookEvent}
+                  disabled={isBooking}
+                  className="w-full mb-4 shadow-lg shadow-orange-200"
+                >
+                  {isBooking ? "Booking..." : "Book Now"}
                 </Button>
 
                 <p className="text-center text-xs text-gray-400 mb-6">
