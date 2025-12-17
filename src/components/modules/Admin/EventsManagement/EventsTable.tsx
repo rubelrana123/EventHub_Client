@@ -103,7 +103,7 @@ const EventsTable = ({ events }: EventsTableProps) => {
         onOpenChange={(open) => !open && setDeletingEvent(null)}
         onConfirm={confirmDelete}
         title="Delete Event"
-        description={`Are you sure you want to delete ${deletingEvent?.name}? This action cannot be undone.`}
+        description={`Are you sure you want to delete ${deletingEvent?.title}? This action cannot be undone.`}
         isDeleting={isDeleting}
       />
     </>
