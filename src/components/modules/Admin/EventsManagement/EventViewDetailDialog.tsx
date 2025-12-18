@@ -108,22 +108,22 @@ const EventViewDetailDialog = ({
             <div className="flex items-center gap-4 bg-muted/50 p-4 rounded-lg">
               <Avatar className="h-14 w-14">
                 <AvatarImage
-                  src={event?.host.profilePhoto}
-                  alt={event?.host.name}
+                  src={event?.host?.profilePhoto as string}
+                  alt={event?.host?.name}
                 />
                 <AvatarFallback>
-                  {getInitials(event?.host.name)}
+                  {getInitials(event?.host?.name as string)}
                 </AvatarFallback>
               </Avatar>
 
               <div className="flex-1">
-                <p className="font-semibold">{event?.host.name}</p>
+                <p className="font-semibold">{event?.host?.name}</p>
                 <p className="text-sm text-muted-foreground">
-                  {event?.host.email}
+                  {event?.host?.email}
                 </p>
                 <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                   <Star className="h-4 w-4 text-yellow-500" />
-                  {event?.host.averageRating || 0}
+                  {event?.host?.averageRating || 0}
                 </div>
               </div>
             </div>
