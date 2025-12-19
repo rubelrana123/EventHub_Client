@@ -1,9 +1,7 @@
 "use client";
 import {
   Calendar,
-  MapPin,
-  Clock,
-  Share2,
+  MapPin,  Share2,
   Heart,
   User,
   Info,
