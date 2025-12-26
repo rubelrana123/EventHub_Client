@@ -48,7 +48,6 @@ interface FilterBadgesProps {
  *
  * @example
  * const activeBadges = [
- *   { paramName: 'specialties', value: 'cardiology', label: 'Cardiology' },
  *   { paramName: 'gender', value: 'MALE', label: 'Male' }
  * ];
  *
