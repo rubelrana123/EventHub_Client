@@ -173,7 +173,7 @@ export async function updateAdmin(id: string, _prevState: any, formData: FormDat
  */
 export async function softDeleteAdmin(id: string) {
     try {
-        const response = await serverFetch.delete(`/admin/soft/${id}`)
+        const response = await serverFetch.delete(`/admin/${id}`)
         const result = await response.json();
         return result;
     } catch (error: any) {
