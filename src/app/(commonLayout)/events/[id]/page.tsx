@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import testData from "../../../../../test";
 import { bookEvent } from "@/services/participator/bookEvent";
+import Link from "next/link";
 
 export default function EventDetailPage() {
   const { id } = useParams();
@@ -178,14 +179,18 @@ export default function EventDetailPage() {
                   Available Seats:{" "}
                   <strong>{event.availableSeats}</strong>
                 </p>
-
-                <Button
+                <Link href="">
+                                <Button
                   onClick={handleBookEvent}
                   disabled={isBooking}
                   className="w-full mb-4 shadow-lg shadow-orange-200"
                 >
-                  {isBooking ? "Booking..." : "Book Now"}
+                  {/* {isBooking ? "Booking..." : "Book Now"} */}
+                  Book Now
                 </Button>
+                </Link>
+                
+
 
                 <p className="text-center text-xs text-gray-400 mb-6">
                   No booking fees. 100% secure payment.

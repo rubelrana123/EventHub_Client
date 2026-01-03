@@ -87,6 +87,19 @@ export async function getHosts(queryString?: string) {
     }
 }
 
+export async function getHostApplications() {
+    try {
+        const response = await serverFetch.get(`/host-applications`);
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}   
 /**
  * GET ADMIN BY ID
  * API: GET /host/:id
