@@ -179,8 +179,8 @@ export default function EventDetailPage() {
                   Available Seats:{" "}
                   <strong>{event.availableSeats}</strong>
                 </p>
-                <Link href="">
-                                <Button
+                <Link href="/join/:id">
+                <Button
                   onClick={handleBookEvent}
                   disabled={isBooking}
                   className="w-full mb-4 shadow-lg shadow-orange-200"
