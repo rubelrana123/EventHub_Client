@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
  
 import { deleteCookie, getCookie, setCookie } from "./tokenHandlers";
 import { serverFetch } from "@/lib/serverFetch";
-import { resetPasswordSchema } from "@/zod/authValidation";
+import { changePasswordSchema, resetPasswordSchema } from "@/zod/authValidation";
 import { getUserInfo } from "./getUserInfo";
 import { UserRole } from "@/types/user";
 import { verifyAccessToken } from "@/lib/jwt-handlers";
@@ -250,4 +250,58 @@ export async function getNewAccessToken() {
         };
     }
 
+}
+
+export async function changePassword(_prevState: any, formData: FormData) {
+    // Build validation payload
+    const validationPayload = {
+        oldPassword: formData.get("oldPassword") as string,
+        newPassword: formData.get("newPassword") as string,
+        confirmPassword: formData.get("confirmPassword") as string,
+    };
+
+    // Validate
+    const validatedPayload = zodValidator(
+        validationPayload,
+        changePasswordSchema
+    );
+
+    if (!validatedPayload.success && validatedPayload.errors) {
+        return {
+            success: false,
+            message: "Validation failed",
+            formData: validationPayload,
+            errors: validatedPayload.errors,
+        };
+    }
+
+    try {
+        // API Call
+        const response = await serverFetch.post("/auth/change-password", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                oldPassword: validationPayload.oldPassword,
+                newPassword: validationPayload.newPassword,
+            }),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(result.message || "Password change failed");
+        }
+
+        return {
+            success: true,
+            message: result.message || "Password changed successfully!",
+        };
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error?.message || "Something went wrong",
+            formData: validationPayload,
+        };
+    }
 }

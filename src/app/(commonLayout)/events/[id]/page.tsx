@@ -173,7 +173,8 @@ export default function EventDetailPage() {
                   <span className="text-3xl font-bold text-[#303030]">
                     ${event.joiningFee}
                   </span>
-                </div>
+                </div>+
+          
 
                 <p className="text-sm text-gray-700 mb-4">
                   Available Seats:{" "}
