@@ -13,7 +13,7 @@ export default async function PublicNavbar() {
     { name: "Home", path: "/" },
     { name: "Events", path: "/events" },
     { name: "Services", path: "/services" },
-    { name: "Subscription", path: "/subscription" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (

@@ -1,7 +1,7 @@
 import { Star, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
-import samplePhoto from '../../../assets/images/hero-host.jpg';
+import samplePhoto from '../../../assets/images/host.jpg';
 
 const testimonials = [
   {
@@ -29,7 +29,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-card py-24">
+    <section className="bg-card py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold text-foreground">What Our Client Says</h2>

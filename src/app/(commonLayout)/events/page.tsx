@@ -1,6 +1,9 @@
+import FeaturedEvent from "@/components/modules/Home/FeaturedEvent";
 
 export default function EventPage() {
   return (
-    <div> event managment page</div>
+    <div> 
+      <FeaturedEvent />
+    </div>
   )
 }
