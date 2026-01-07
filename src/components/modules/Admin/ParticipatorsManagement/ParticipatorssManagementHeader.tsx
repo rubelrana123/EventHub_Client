@@ -36,8 +36,7 @@ const ParticipatorsManagementHeader = () => {
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleCloseDialog}
-        onSuccess={handleSuccess}
-      />
+        onSuccess={handleSuccess} participator={null}      />
 
       <ManagementPageHeader
         title="Participators Management"

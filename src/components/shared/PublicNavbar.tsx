@@ -14,6 +14,7 @@ export default async function PublicNavbar() {
     { name: "Events", path: "/events" },
     { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
+    { name : "Dashboard", path: "/dashboard" }
   ];
 
   return (

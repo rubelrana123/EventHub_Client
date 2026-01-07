@@ -44,9 +44,9 @@ export interface IHostApplication {
 
 interface Props {
   data: IHostApplication[];
-  onApprove: (id: string) => Promise<void>;
-  onReject: (id: string) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
+  // onApprove: (id: string) => Promise<void>;
+  // onReject: (id: string) => Promise<void>;
+  // onDelete: (id: string) => Promise<void>;
 }
 
 // ------------------
@@ -54,9 +54,9 @@ interface Props {
 // ------------------
 export default function HostApplicationTable({
   data,
-  onApprove,
-  onReject,
-  onDelete,
+  // onApprove,
+  // onReject,
+  // onDelete,
 }: Props) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
@@ -111,9 +111,9 @@ export default function HostApplicationTable({
                   <>
                     <Button
                       size="sm"
-                      onClick={() =>
-                        handleAction(() => onApprove(item.id), item.id)
-                      }
+                      // onClick={() =>
+                      //   handleAction(() => onApprove(item.id), item.id)
+                      // }
                       disabled={loadingId === item.id}
                     >
                       Approve
@@ -122,9 +122,9 @@ export default function HostApplicationTable({
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() =>
-                        handleAction(() => onReject(item.id), item.id)
-                      }
+                      // onClick={() =>
+                      //   handleAction(() => onReject(item.id), item.id)
+                      // }
                       disabled={loadingId === item.id}
                     >
                       Reject
@@ -135,9 +135,9 @@ export default function HostApplicationTable({
                 <Button
                   size="sm"
                   variant="destructive"
-                  onClick={() =>
-                    handleAction(() => onDelete(item.id), item.id)
-                  }
+                  // onClick={() =>
+                  //   handleAction(() => onDelete(item.id), item.id)
+                  // }
                   disabled={loadingId === item.id}
                 >
                   Delete
