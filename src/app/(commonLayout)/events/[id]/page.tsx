@@ -12,7 +12,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import testData from "../../../../../test";
+import testData from "../../../../assets/data/test";
 import { bookEvent } from "@/services/participator/bookEvent";
 import Link from "next/link";
 

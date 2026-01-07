@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { FeaturedEventCard } from "./FeaturedCard";
-import testData from "../../../../test";
-
+import testData from "@/assets/data/test";
+ 
 export default function FeaturedEvent() {
   const events = testData?.data || [];
 
