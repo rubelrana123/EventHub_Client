@@ -48,7 +48,7 @@ export async function proxy(request: NextRequest) {
     }
 
     const routerOwner = getRouteOwner(pathname);
-    //path = /host/appointments => "HOST"
+    //path = /host/events => "HOST"
     //path = /my-profile => "COMMON"
     //path = /login => null
 
