@@ -13,10 +13,10 @@ const PaymentSuccessContent = () => {
 
   useEffect(() => {
     // Get return URL from session storage only on client
-    revalidate("my-appointments");
+    revalidate("my-event");
     const storedUrl =
       sessionStorage.getItem("paymentReturnUrl") ||
-      "/dashboard/my-appointments";
+      "/dashboard/my-event";
     sessionStorage.removeItem("paymentReturnUrl");
 
     // Start countdown
@@ -44,7 +44,7 @@ const PaymentSuccessContent = () => {
   const handleManualRedirect = () => {
     const storedUrl =
       sessionStorage.getItem("paymentReturnUrl") ||
-      "/dashboard/my-appointments";
+      "/dashboard/my-event";
     sessionStorage.removeItem("paymentReturnUrl");
     router.push(storedUrl);
   };
@@ -70,7 +70,7 @@ const PaymentSuccessContent = () => {
                 Payment Successful!
               </h1>
               <p className="text-green-700">
-                Your appointment has been confirmed and payment received.
+                Your Event has been confirmed and payment received.
               </p>
             </div>
 
@@ -78,13 +78,13 @@ const PaymentSuccessContent = () => {
             <div className="bg-green-50 rounded-lg p-4 border border-green-200">
               <p className="text-sm text-green-800">
                 A confirmation email has been sent to your registered email
-                address with appointment details.
+                address with event details.
               </p>
             </div>
 
             {/* Countdown */}
             <div className="text-sm text-green-600">
-              Redirecting to your appointments in {countdown} seconds...
+              Redirecting to your event in {countdown} seconds...
             </div>
 
             {/* Action Button */}

@@ -10,9 +10,9 @@ import {
 } from "../ui/alert-dialog";
 
 interface DeleteConfirmDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onConfirm: () => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  onConfirm?: () => void;
   title?: string;
   description?: string;
   itemName?: string;

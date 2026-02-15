@@ -89,7 +89,7 @@ export async function getHosts(queryString?: string) {
 
 export async function getHostApplications() {
     try {
-        const response = await serverFetch.get(`/host-applications`);
+        const response = await serverFetch.get(`/host-application`);
         const result = await response.json();
         return result;
     } catch (error: any) {
@@ -205,6 +205,31 @@ export async function softDeleteHost(id: string) {
 export async function deleteHost(id: string) {
     try {
         const response = await serverFetch.delete(`/host/${id}`)
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function changeHostApplicationStatus(
+    id: string,
+    action: "APPROVED" | "REJECTED",
+    adminNote?: string
+) {
+    try {
+        const payload: any = { action };
+        if (adminNote) {
+            payload.adminNote = adminNote;
+        }
+        const response = await serverFetch.patch(`/host-application/process/${id}`, {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
         const result = await response.json();
         return result;
     } catch (error: any) {

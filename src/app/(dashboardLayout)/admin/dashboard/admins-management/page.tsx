@@ -16,12 +16,13 @@ const AdminAdminsManagementPage = async ({
   const searchParamsObj = await searchParams;
   const queryString = queryStringFormatter(searchParamsObj);
   const adminsResult = await getAdmins(queryString);
-
+  
   const totalPages = Math.ceil(
-    (adminsResult?.meta?.total || 1) / (adminsResult?.meta?.limit || 1)
+    (adminsResult?.data?.meta?.total || 1) / (adminsResult?.data?.meta?.limit || 1)
   );
-console.log("result from admin deep",adminsResult )
-  return (
+console.log("result from admin deep",adminsResult, adminsResult?.data?.data )
+console.log(adminsResult?.data?.meta?.page || 1, totalPages || 1)  
+return (
     <div className="space-y-6">
       <AdminsManagementHeader />
 
@@ -31,7 +32,8 @@ console.log("result from admin deep",adminsResult )
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
         <AdminsTable admins={adminsResult?.data?.data || []} />
         <TablePagination
-          currentPage={adminsResult?.meta?.page || 1}
+          currentPage={adminsResult?.data
+            ?.meta?.page || 1}
           totalPages={totalPages || 1}
         />
       </Suspense>

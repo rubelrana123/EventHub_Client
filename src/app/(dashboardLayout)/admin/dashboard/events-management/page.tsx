@@ -21,7 +21,7 @@ const  EventsManagementPage = async ({
   const totalPages = Math.ceil(
     (eventsResult?.meta?.total || 1) / (eventsResult?.meta?.limit || 1)
   );
-console.log("result from admin deep",eventsResult )
+console.log("result from event deep",eventsResult )
   return (
     <div className="space-y-6">
  
@@ -36,10 +36,8 @@ console.log("result from admin deep",eventsResult )
  
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
-         <EventsTable events={eventsResult?.data || []} />
-         
-
-         events table here
+         <EventsTable events={eventsResult?.data  || []} />
+          
         <TablePagination
           currentPage={eventsResult?.meta?.page || 1}
           totalPages={totalPages || 1}

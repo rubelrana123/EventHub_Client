@@ -52,7 +52,7 @@ export async function createEvent(_prevState: any, formData: FormData) {
   }
 
   try {
-    const response = await serverFetch.post("/event", {
+    const response = await serverFetch.post("/event/create-event", {
       body: payload,
     });
 
@@ -70,15 +70,17 @@ export async function createEvent(_prevState: any, formData: FormData) {
   }
 }
 
-/* ================================
-   GET ALL EVENTS
-   API: GET /event
-================================ */
+
+  //  GET ALL EVENTS
+  //  API: GET /event
+
 export async function getEvents(queryString?: string) {
+  console.log("inner get event")
   try {
     const response = await serverFetch.get(
       `/event${queryString ? `?${queryString}` : ""}`
     );
+    console.log(response , "response event")
     return await response.json();
   } catch (error: any) {
     console.error(error);
@@ -92,10 +94,10 @@ export async function getEvents(queryString?: string) {
   }
 }
 
-/* ================================
-   GET EVENT BY ID
-   API: GET /event/:id
-================================ */
+
+  //  GET EVENT BY ID
+  //  API: GET /event/:id
+
 export async function getEventById(id: string) {
   try {
     const response = await serverFetch.get(`/event/${id}`);
@@ -183,7 +185,7 @@ export async function updateEvent(
 ================================ */
 export async function softDeleteEvent(id: string) {
   try {
-    const response = await serverFetch.delete(`/event/soft/${id}`);
+    const response = await serverFetch.patch(`/event/soft/${id}`);
     return await response.json();
   } catch (error: any) {
     console.error(error);

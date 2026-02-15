@@ -5,6 +5,7 @@
 import { serverFetch } from "@/lib/serverFetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { ParticipatorValidation } from "@/zod/participator.validation";
+import { getCookie } from "../auth/tokenHandlers";
 /**
  * CREATE Participator
  * API: POST /user/create-participator
@@ -203,19 +204,47 @@ export async function deleteParticipator(id: string) {
 }
 
 export async function bookEvent(eventId: string) {
-    try {
-        const response = await serverFetch.post(`/participator/join/${eventId}`, {
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ eventId }),
-        });
-        const result = await response.json();
-
-        return result;
-    } catch (error: any) {
-        console.error("Book event error:", error);
-        return {
-            success: false,
-            message: process.env.NODE_ENV === 'development' ? error.message : 'Failed to book event',
-        };
+  try {
+    const token = await getCookie("accessToken");
+    console.log("inner  book event Token:", token);
+    if (!token) {
+      return {
+        success: false,
+        message: "Authentication required",
+      };
     }
+
+    const res = await fetch(
+      `http://localhost:5000/api/v1/events/${eventId}/join`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+        body: JSON.stringify({ eventId }),
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: result?.message || "Payment initiation failed",
+      };
+    }
+
+    return result;
+  } catch (error: any) {
+    console.error("Book event error:", error);
+    return {
+      success: false,
+      message:
+        process.env.NODE_ENV === "development"
+          ? error.message
+          : "Failed to book event",
+    };
+  }
 }

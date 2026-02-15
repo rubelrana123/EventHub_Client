@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -11,64 +11,56 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-
-// ------------------
-// Types
-// ------------------
-export type HostApplicationStatus = "PENDING" | "APPROVED" | "REJECTED";
-
-interface IUser {
-  id: string;
-  email: string;
-  role: string;
-  status: string;
-}
-
-interface IParticipator {
-  id: string;
-  name: string;
-  email: string;
-  profilePhoto?: string;
-  contactNumber?: string;
-}
-
-export interface IHostApplication {
-  id: string;
-  status: HostApplicationStatus;
-  message: string;
-  adminNote?: string | null;
-  createdAt: string;
-  user: IUser;
-  participator: IParticipator;
-}
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import type { IHostApplication } from "@/types/host.type";
+import type { HostApplicationStatus } from "@/types/user";
 
 interface Props {
   data: IHostApplication[];
-  // onApprove: (id: string) => Promise<void>;
-  // onReject: (id: string) => Promise<void>;
-  // onDelete: (id: string) => Promise<void>;
+  onChangeStatus?: (
+    id: string,
+    action: "APPROVED" | "REJECTED",
+    adminNote?: string
+  ) => Promise<{ success: boolean; message?: string }>;
 }
-
-// ------------------
-// Component
-// ------------------
+ 
 export default function HostApplicationTable({
   data,
-  // onApprove,
-  // onReject,
-  // onDelete,
+  onChangeStatus,
 }: Props) {
+  const router = useRouter();
+  const [, startTransition] = useTransition();
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
+  const handleRefresh = () => {
+    startTransition(() => {
+      router.refresh();
+    });
+  };
+
   const handleAction = async (
-    action: () => Promise<void>,
-    id: string
+    action:
+      | ((
+          id: string,
+          action: "APPROVED" | "REJECTED",
+          adminNote?: string
+        ) => Promise<{ success: boolean; message?: string }>)
+      | undefined,
+    id: string,
+    status: "APPROVED" | "REJECTED",
+    fallbackMessage: string
   ) => {
-    try {
-      setLoadingId(id);
-      await action();
-    } finally {
-      setLoadingId(null);
+    if (!action) return;
+    setLoadingId(id);
+    const result = await action(id, status);
+    setLoadingId(null);
+
+    if (result?.success) {
+      toast.success(result.message || fallbackMessage);
+      handleRefresh();
+    } else {
+      toast.error(result?.message || "Something went wrong");
     }
   };
 
@@ -95,10 +87,10 @@ export default function HostApplicationTable({
           {data.map((item) => (
             <TableRow key={item.id}>
               <TableCell className="font-medium">
-                {item.participator.name}
+                {item?.participator?.name}
               </TableCell>
 
-              <TableCell>{item.participator.email}</TableCell>
+              <TableCell>{item?.participator?.email}</TableCell>
 
               <TableCell className="max-w-[320px] truncate">
                 {item.message}
@@ -111,9 +103,14 @@ export default function HostApplicationTable({
                   <>
                     <Button
                       size="sm"
-                      // onClick={() =>
-                      //   handleAction(() => onApprove(item.id), item.id)
-                      // }
+                      onClick={() =>
+                        handleAction(
+                          onChangeStatus,
+                          item.id,
+                          "APPROVED",
+                          "Host application approved"
+                        )
+                      }
                       disabled={loadingId === item.id}
                     >
                       Approve
@@ -122,26 +119,21 @@ export default function HostApplicationTable({
                     <Button
                       size="sm"
                       variant="outline"
-                      // onClick={() =>
-                      //   handleAction(() => onReject(item.id), item.id)
-                      // }
+                      onClick={() =>
+                        handleAction(
+                          onChangeStatus,
+                          item.id,
+                          "REJECTED",
+                          "Host application rejected"
+                        )
+                      }
                       disabled={loadingId === item.id}
                     >
                       Reject
                     </Button>
                   </>
                 )}
-
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  // onClick={() =>
-                  //   handleAction(() => onDelete(item.id), item.id)
-                  // }
-                  disabled={loadingId === item.id}
-                >
-                  Delete
-                </Button>
+ 
               </TableCell>
             </TableRow>
           ))}

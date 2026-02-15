@@ -41,11 +41,11 @@ const ParticipatorsManagementHeader = () => {
       <ManagementPageHeader
         title="Participators Management"
         description="Manage participator accounts and permissions"
-        action={{
-          label: "Add Participator",
-          icon: Plus,
-          onClick: handleOpenDialog,
-        }}
+        // action={{
+        //   label: "Add Participator",
+        //   icon: Plus,
+        //   onClick: handleOpenDialog,
+        // }}
       />
     </>
   );

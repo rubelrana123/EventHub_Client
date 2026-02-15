@@ -19,9 +19,9 @@ const  ParticipatorsPage = async ({
   const participatorsResult = await getParticipators(queryString);
 
   const totalPages = Math.ceil(
-    (participatorsResult?.meta?.total || 1) / (participatorsResult?.meta?.limit || 1)
+    (participatorsResult?.data?.meta?.total || 1) / (participatorsResult?.data?.meta?.limit || 1)
   );
-console.log("result from admin deep",participatorsResult )
+console.log("result from admin deep participator",participatorsResult )
   return (
     <div className="space-y-6">
       <ParticipatorsManagementHeader />
@@ -32,7 +32,7 @@ console.log("result from admin deep",participatorsResult )
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
         <ParticipatorsTable participators={participatorsResult?.data?.data || []} />
         <TablePagination
-          currentPage={participatorsResult?.meta?.page || 1}
+          currentPage={participatorsResult?.data?.meta?.page || 1}
           totalPages={totalPages || 1}
         />
       </Suspense>

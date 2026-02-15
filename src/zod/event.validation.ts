@@ -49,19 +49,15 @@ export const eventCreationSchema = z.object({
 // UPDATE EVENT
 // ===================================================
 export const eventUpdateSchema = z.object({
-  body: z.object({
-    title: z.string().optional(),
-    description: z.string().optional(),
-    bannerPhoto: z.string().optional(),
-
-    dateTime: z.string().optional(),
-    location: z.string().optional(),
-    eventType: z.string().optional(),
-
-    minParticipants: z.number().int().min(0).optional(),
-    maxParticipants: z.number().int().min(1).optional(),
-    joiningFee: z.number().int().min(0).optional(),
-  }),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  bannerPhoto: z.string().optional(),
+  dateTime: z.string().optional(),
+  location: z.string().optional(),
+  eventType: z.string().optional(),
+  minParticipants: z.number().int().min(0).optional(),
+  maxParticipants: z.number().int().min(1).optional(),
+  joiningFee: z.number().int().min(0).optional(),
 });
 
 export type EventCreationFormValues = z.infer<typeof eventCreationSchema>;

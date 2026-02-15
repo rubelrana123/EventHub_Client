@@ -12,9 +12,7 @@ import {
   Loader2,
 } from "lucide-react";
 import Image from "next/image";
- 
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useTransition } from "react";
+import React from "react";
 
 export interface Column<T> {
   header: string;
@@ -42,10 +40,6 @@ function ManagementCardGrid<T>({
   emptyMessage = "No events found.",
   isRefreshing = false,
 }: ManagementCardGridProps<T>) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [, startTransition] = useTransition();
-
   if (data.length === 0) {
     return (
       <div className="text-center py-16 text-muted-foreground">

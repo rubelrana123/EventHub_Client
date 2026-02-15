@@ -28,7 +28,7 @@ interface Props {
   onDelete?: (id: string) => void;
 }
 
-export function FeaturedEventCard({ event, onEdit, onDelete }: Props) {
+export function EventCard({ event, onEdit, onDelete }: Props) {
   const date = new Date(event.dateTime);
 
   const formattedDate = date.toLocaleDateString("en-US", {

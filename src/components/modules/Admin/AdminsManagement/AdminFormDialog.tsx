@@ -32,13 +32,16 @@ const AdminFormDialog = ({
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isEdit = !!admin?.id;
-  //   const { isEditMode, state, formAction, isPending } = useAdminForm(admin);
+    // const { isEditMode, state, formAction, isPending } = useAdminForm(admin);
 
   const [state, formAction, isPending] = useActionState(
     isEdit ? updateAdmin.bind(null, admin?.id as string) : createAdmin,
     null
   );
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+ 
+  const prevStateRef = useRef(state);
+ 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,6 +50,8 @@ const AdminFormDialog = ({
 
   // Handle success/error from server
   useEffect(() => {
+    if (state === prevStateRef.current) return;
+    prevStateRef.current = state;
     if (state?.success) {
       toast.success(state.message || "Operation successful");
       if (formRef.current) {
@@ -65,6 +70,7 @@ const AdminFormDialog = ({
       }
     }
   }, [state, onSuccess, onClose, selectedFile]);
+
 
   const handleClose = () => {
     setSelectedFile(null);

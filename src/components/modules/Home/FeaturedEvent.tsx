@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
  
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { FeaturedEventCard } from "./FeaturedCard";
+import { EventCard } from "./EventCard";
 import testData from "@/assets/data/test";
  
-export default function FeaturedEvent() {
-  const events = testData?.data || [];
-
+import { getEvents } from "@/services/admin/eventsManagement";
+ 
+export default async function FeaturedEvent() {
+  // const events = testData?.data || [];
+  const events = await getEvents();
+  console.log("events", events);
+  console.log(events, "events");
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -29,8 +34,8 @@ export default function FeaturedEvent() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event) => (
-            <FeaturedEventCard key={event.id} event={event} />
+          {events && events?.data?.map((event: any) => (
+            <EventCard key={event.id} event={event} />
           ))}
         </div>
 

@@ -1,4 +1,5 @@
 import HostApplicationTable from "./HostApplicationTable";
+import { changeHostApplicationStatus } from "@/services/admin/hostsManagement";
 
 export default function HostApplication({
   hostApplicationsResult,
@@ -6,13 +7,15 @@ export default function HostApplication({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   hostApplicationsResult: any;
 }) {
+
+  
+
   return (
     <div>
+      <h1 className="text-2xl font-bold m-3 " >Host Applications</h1>
       <HostApplicationTable
-        data={hostApplicationsResult?.data || []}
-        // onApprove={(id) => approveHostApplication(id)}
-        // onReject={(id) => rejectHostApplication(id)}
-        // onDelete={(id) => deleteHostApplication(id)}
+        data={hostApplicationsResult || []}
+        onChangeStatus={changeHostApplicationStatus}
       />
     </div>
   );

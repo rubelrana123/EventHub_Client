@@ -14,15 +14,7 @@ const HostsFilter = () => {
       </div>
 
       {/* Row 2: Filter Controls */}
-      <div className="flex items-center gap-3">
-        {/* Email Filter */}
-        <SearchFilter paramName="email" placeholder="Email" />
-
-        {/* Contact Number Filter */}
-        <SearchFilter paramName="contactNumber" placeholder="Contact" />
-
-        <ClearFiltersButton />
-      </div>
+    
     </div>
   );
 };

@@ -72,7 +72,7 @@ const HostsTable = ({ hosts }: HostsTableProps) => {
       />
 
       {/* Edit Host Form Dialog */}
-      <HostFormDialog
+      {/* <HostFormDialog
         open={!!editingHost}
         onClose={() => setEditingHost(null)}
         host={editingHost!}
@@ -80,7 +80,7 @@ const HostsTable = ({ hosts }: HostsTableProps) => {
           setEditingHost(null);
           handleRefresh();
         }}
-      />
+      /> */}
 
       {/* View Host Detail Dialog */}
       <HostViewDetailDialog

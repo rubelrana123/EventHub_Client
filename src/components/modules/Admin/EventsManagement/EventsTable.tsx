@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import ManagementCardGrid from "./EventCard";
 import { eventsColumns } from "./EventsColumn";
-import EventFormDialog from "./EventsFormDialog";
 import { IEvent } from "@/types/event.type";
 import { softDeleteEvent } from "@/services/admin/eventsManagement";
 import EventViewDetailDialog from "./EventViewDetailDialog";
@@ -21,7 +20,6 @@ const EventsTable = ({ events }: EventsTableProps) => {
   const [, startTransition] = useTransition();
   const [deletingEvent, setDeletingEvent] = useState<IEvent | null>(null);
   const [viewingEvent, setViewingEvent] = useState<IEvent | null>(null);
-  const [editingEvent, setEditingEvent] = useState<IEvent | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleRefresh = () => {
@@ -32,10 +30,6 @@ const EventsTable = ({ events }: EventsTableProps) => {
 
   const handleView = (event: IEvent) => {
     setViewingEvent(event);
-  };
-
-  const handleEdit = (event: IEvent) => {
-    setEditingEvent(event);
   };
 
   const handleDelete = (event: IEvent) => {
@@ -64,33 +58,11 @@ const EventsTable = ({ events }: EventsTableProps) => {
   data={events}
   columns={eventsColumns} // kept for API compatibility
   onView={handleView}
-  onEdit={handleEdit}
   onDelete={handleDelete}
   getRowKey={(event) => event.id}
   emptyMessage="No events found"
 />
-      {/* <ManagementTable
-        data={events}
-        columns={eventsColumns}
-        onView={handleView}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        getRowKey={(event) => event.id!}
-        emptyMessage="No events found"
-      /> */}
-
-      {/* Edit Event Form Dialog */}
-      <EventFormDialog
-        open={!!editingEvent}
-        onClose={() => setEditingEvent(null)}
-        event={editingEvent!}
-        onSuccess={() => {
-          setEditingEvent(null);
-          handleRefresh();
-        }}
-      />
-
-      {/* View Event Detail Dialog */}
+        
       <EventViewDetailDialog
         open={!!viewingEvent}
         onClose={() => setViewingEvent(null)}
