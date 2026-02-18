@@ -100,6 +100,39 @@ export async function getHostApplications() {
         };
     }
 }   
+
+export async function getMyEventParticipators(queryString?: string) {
+    try {
+        const response = await serverFetch.get(
+            `/host/my-event-participators${queryString ? `?${queryString}` : ""}`
+        );
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
+export async function getMyEventReviews(queryString?: string) {
+    try {
+        const response = await serverFetch.get(
+            `/host/my-event-reviews${queryString ? `?${queryString}` : ""}`
+        );
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: `${process.env.NODE_ENV === 'development' ? error.message : 'Something went wrong'}`
+        };
+    }
+}
+
 /**
  * GET ADMIN BY ID
  * API: GET /host/:id
