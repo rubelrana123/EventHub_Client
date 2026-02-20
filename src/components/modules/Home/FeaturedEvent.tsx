@@ -3,15 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { EventCard } from "./EventCard";
-import testData from "@/assets/data/test";
- 
 import { getEvents } from "@/services/admin/eventsManagement";
  
 export default async function FeaturedEvent() {
   // const events = testData?.data || [];
   const events = await getEvents();
-  console.log("events", events);
-  console.log(events, "events");
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -19,7 +15,7 @@ export default async function FeaturedEvent() {
         {/* Header */}
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#444444] mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
               Featured Events
             </h2>
             <p className="text-gray-600">
@@ -27,7 +23,7 @@ export default async function FeaturedEvent() {
             </p>
           </div>
 
-          <Button variant="ghost" className="hidden sm:flex">
+          <Button variant="ghost" className="hidden text-slate-700 hover:text-cyan-700 sm:flex">
             View All Events <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>

@@ -24,7 +24,7 @@ interface EventDetailsPageProps {
 export default function EventDetailsPage({ event }: EventDetailsPageProps) {
   const [isBooking, setIsBooking] = useState(false);
 
-  const handleBookNow = async () => {
+  const handleBuyNow = async () => {
     if (isBooking) return;
 
     setIsBooking(true);
@@ -74,7 +74,7 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-12">
           <div className="max-w-7xl mx-auto">
-            <span className="px-4 py-1 bg-[#ff4000] text-white text-xs font-bold rounded-full">
+            <span className="px-4 py-1 bg-cyan-600 text-white text-xs font-bold rounded-full">
               {event.eventType}
             </span>
             <h1 className="text-3xl md:text-5xl font-bold text-white mt-4 mb-4">
@@ -82,11 +82,11 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
             </h1>
             <div className="flex gap-4 text-white/90">
               <div className="flex items-center gap-2">
-                <User className="h-5 w-5 text-[#ff4000]" />
+                <User className="h-5 w-5 text-cyan-400" />
                 Hosted by {event?.host?.name}
               </div>
               <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 text-[#ff4000] fill-current" />
+                <Star className="h-5 w-5 text-amber-400 fill-current" />
                 {event?.host?.averageRating?.toFixed(1)}
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
         <div className="lg:col-span-2 space-y-10">
           <div className="bg-white p-6 rounded-2xl shadow border">
             <div className="flex gap-6">
-              <Calendar className="text-[#ff4000]" />
+              <Calendar className="text-cyan-600" />
               <div>
                 <p>{formattedDate}</p>
                 <p>{formattedTime}</p>
@@ -108,14 +108,14 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
             </div>
 
             <div className="flex gap-6 mt-4">
-              <MapPin className="text-[#b700ff]" />
+              <MapPin className="text-cyan-600" />
               <p>{event.location}</p>
             </div>
           </div>
 
           <section>
             <h2 className="text-xl font-bold flex gap-2">
-              <Info className="text-[#ff4000]" />
+              <Info className="text-cyan-600" />
               About This Event
             </h2>
             <p className="text-gray-600 mt-2">{event.description}</p>
@@ -123,7 +123,7 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
 
           <section>
             <h3 className="font-bold flex gap-2">
-              <Tag className="text-[#ff4000]" />
+              <Tag className="text-cyan-600" />
               Category
             </h3>
             <span className="px-4 py-2 bg-gray-100 rounded-lg">
@@ -147,11 +147,11 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
             </p>
 
             <Button
-              onClick={handleBookNow}
+              onClick={handleBuyNow}
               disabled={isBooking}
-              className="w-full shadow-lg shadow-orange-200"
+              className="w-full bg-slate-900 text-white hover:bg-cyan-800 shadow-lg shadow-cyan-100"
             >
-              {isBooking ? "Processing..." : "Book Now"}
+              {isBooking ? "Processing..." : "Buy Ticket"}
             </Button>
 
             <p className="text-xs text-center text-gray-400 mt-4">

@@ -1,16 +1,12 @@
 import { Metadata } from "next";
-import EventDetails from "@/components/shared/EventDetails";
-import { getUserInfo } from "@/lib/getUserSession";
-import { getCookie } from "@/service/auth.service";
+import EventDetails from "@/components/modules/Event/EventDetails";
+import { getEventDetailsById } from "@/services/event/event.service";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const { id } = await params;
     
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`, {
-            cache: "no-store",
-        });
-        const result = await res.json();
+        const result = await getEventDetailsById(id);
         const event = result.data;
 
         if (!event) {
@@ -62,14 +58,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
 
     const { id } = await params
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`);
-    const result = await res.json()
+    const result = await getEventDetailsById(id);
 
-    // Get current user session
-    const user = await getUserInfo();
-    const currentUser = user;
-
-    const token = await getCookie("accessToken");
-
-    return <EventDetails data={result.data} currentUser={currentUser} token={token}/>;
+    return <EventDetails event={result.data} />;
 }

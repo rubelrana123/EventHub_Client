@@ -3,6 +3,7 @@ import { getEvents } from "@/services/admin/eventsManagement";
 import { getHosts } from "@/services/admin/hostsManagement";
 import { getParticipators } from "@/services/admin/participatorsManagement";
 import { IEvent } from "@/types/event.type";
+import DashboardVisualGraphs from "@/components/modules/Dashboard/DashboardVisualGraphs";
 import {
   Activity,
   CalendarClock,
@@ -98,10 +99,10 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-6">
+      <section className="rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 via-white to-emerald-50 p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-orange-700 shadow-sm">
+            <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-cyan-700 shadow-sm">
               <Sparkles className="h-3.5 w-3.5" />
               Admin Analytics
             </p>
@@ -125,7 +126,7 @@ export default async function AdminDashboardPage() {
         <article className="rounded-xl border bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-slate-600">Total Events</p>
-            <CalendarClock className="h-4 w-4 text-orange-600" />
+            <CalendarClock className="h-4 w-4 text-cyan-600" />
           </div>
           <p className="mt-3 text-3xl font-bold text-slate-900">{totalEvents}</p>
           <p className="mt-1 text-xs text-slate-500">Across all event types</p>
@@ -154,7 +155,7 @@ export default async function AdminDashboardPage() {
         <article className="rounded-xl border bg-white p-5 shadow-sm">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-slate-600">Admins</p>
-            <ShieldCheck className="h-4 w-4 text-violet-600" />
+            <ShieldCheck className="h-4 w-4 text-cyan-700" />
           </div>
           <p className="mt-3 text-3xl font-bold text-slate-900">{totalAdmins}</p>
           <p className="mt-1 text-xs text-slate-500">System managers</p>
@@ -231,7 +232,7 @@ export default async function AdminDashboardPage() {
                     </div>
                     <div className="h-2 rounded-full bg-slate-100">
                       <div
-                        className="h-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400"
+                        className="h-2 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500"
                         style={{ width: `${width}%` }}
                       />
                     </div>
@@ -244,6 +245,23 @@ export default async function AdminDashboardPage() {
           </div>
         </article>
       </section>
+
+      <DashboardVisualGraphs
+        title="Platform Event Flow"
+        description="Status distribution across all events."
+        bars={[
+          { label: "Upcoming", value: upcomingCount, colorClass: "bg-amber-500" },
+          { label: "Live", value: liveCount, colorClass: "bg-emerald-500" },
+          { label: "Completed", value: completedCount, colorClass: "bg-slate-600" },
+        ]}
+        donutLabel="Active Event Ratio"
+        donutValue={upcomingCount + liveCount}
+        donutTotal={totalEvents}
+        summaries={[
+          { label: "Avg Seat Usage", value: toPercent(avgSeatUsage) },
+          { label: "Revenue Potential", value: `BDT ${potentialRevenue.toLocaleString()}` },
+        ]}
+      />
 
       <section className="rounded-xl border bg-white p-5 shadow-sm">
         <h2 className="mb-4 text-base font-semibold text-slate-900">

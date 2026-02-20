@@ -79,13 +79,13 @@ export const participatorNavItems: NavSection[] = [
       },
       {
         title: "My Joined Events",
-        href: "/participator/my-events",
+        href: "/dashboard/my-events",
         icon: "CalendarCheck",
         roles: ["PARTICIPATOR"],
       },
       {
-        title: "My Reviews",
-        href: "/participator/reviews",
+        title: "My History",
+        href: "/dashboard/my-history",
         icon: "Star",
         roles: ["PARTICIPATOR"],
       },

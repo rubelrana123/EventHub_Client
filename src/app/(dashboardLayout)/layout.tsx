@@ -13,8 +13,8 @@ const CommonDashboardLayout = async ({
       <DashboardSidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <DashboardNavbar />
-        <main className="flex-1 overflow-y-auto bg-muted/10 p-4 md:p-6">
-          <div className="">{children}</div>
+        <main className="flex-1 overflow-y-auto bg-gradient-to-b from-slate-50 via-cyan-50/30 to-white p-4 md:p-6">
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
         </main>
       </div>
     </div>

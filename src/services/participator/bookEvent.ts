@@ -205,31 +205,21 @@ export async function deleteParticipator(id: string) {
 
 export async function bookEvent(eventId: string) {
   try {
-    const token = await getCookie("accessToken");
-    console.log("inner  book event Token:", token);
-    if (!token) {
+    const accessToken = await getCookie("accessToken");
+    if (!accessToken) {
       return {
         success: false,
         message: "Authentication required",
       };
     }
 
-    const res = await fetch(
-      `http://localhost:5000/api/v1/events/${eventId}/join`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-        body: JSON.stringify({ eventId }),
-      }
-    );
+    const response = await serverFetch.post(`/event/${eventId}/join`, {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ eventId }),
+    });
+    const result = await response.json();
 
-    const result = await res.json();
-
-    if (!res.ok) {
+    if (!response.ok) {
       return {
         success: false,
         message: result?.message || "Payment initiation failed",

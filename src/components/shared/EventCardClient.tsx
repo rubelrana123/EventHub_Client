@@ -2,16 +2,14 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { Calendar, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { cn } from "@/lib/utils";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
+import UnifiedEventCard from "./UnifiedEventCard";
+import { bookEvent } from "@/services/participator/bookEvent";
  
 interface IEventApiResponse {
   data: {
@@ -61,48 +59,27 @@ export default function EventCardClient({
     setIsLeaveOpen(true);
   };
 
-      // Handle Join Now button click
-    const handlePayment = async (eventId: string) => {
-        try {
+  const handleBuyTicket = async (eventId: string) => {
+    try {
+      const result = await bookEvent(eventId);
 
-            if (!token) {
-                toast.error("Authentication required. Please login.");
-                return;
-            }
+      if (!result?.success) {
+        toast.error(result?.message || "Payment initiation failed");
+        return;
+      }
 
-            const payload: any = { eventId };
+      if (!result?.data?.paymentUrl) {
+        toast.error("Payment URL not found. Please try again.");
+        return;
+      }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${eventId}/join`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                    authorization: token as string
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const result = await res.json();
-
-            if (!result?.data?.paymentUrl) {
-                toast.error("Payment URL not found try gain 2min later");
-                throw new Error("Payment URL not found");
-            }
-
-            if (result?.error) {
-                toast.error(result?.error);
-                throw new Error(result?.error);
-            }
-
-            toast.success("Redirecting to payment page....");
-            window.location.href = result?.data?.paymentUrl
-
-        } catch (error) {
-            console.error("Payment error:", error);
-        }
-    };
-
-
+      toast.success("Redirecting to payment page...");
+      window.location.href = result.data.paymentUrl;
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.error("Failed to start payment.");
+    }
+  };
 
   const handleLeaveConfirm = async () => {
     if (!selectedEvent || !token) {
@@ -147,75 +124,40 @@ export default function EventCardClient({
           const isPaid = hasUserPaid(event);
 
           return (
-            <Card
+            <UnifiedEventCard
               key={event.id}
-              className={cn(
-                "group overflow-hidden rounded-xl border shadow-sm transition-all",
-                "hover:shadow-lg hover:-translate-y-1"
-              )}
-            >
-              {/* Image */}
-              <div className="relative h-56 w-full">
-                <Image
-                  src={event.bannerPhoto || "/placeholder.png"}
-                  alt={event.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-
-                <span className="absolute top-3 left-3 bg-primary text-white text-xs px-3 py-1 rounded-full">
-                  {event.eventType}
-                </span>
-
-                <span className="absolute top-3 right-3 bg-red-500 text-white text-xs px-3 py-1 rounded-full">
-                  ৳{event.joiningFee}
-                </span>
-              </div>
-
-              {/* Content */}
-              <CardContent className="p-4">
-                <CardTitle className="text-lg font-bold mb-2">
-                  {event.title}
-                </CardTitle>
-
-                <div className="flex items-center text-sm text-gray-600 mb-1">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {new Date(event.dateTime).toLocaleDateString()}
-                </div>
-
-                <div className="flex items-center text-sm text-gray-600 mb-3">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  {event.location}
-                </div>
-
-                <div className="flex gap-2">
-                  <Link
-                    href={`/events/${event.id}`}
-                    className="w-1/2 text-center border border-primary text-primary bg-purple-50 hover:bg-white px-4 py-2 rounded-md text-sm font-semibold"
-                  >
-                    View Details
+              event={event}
+              actions={
+                <>
+                  <Link href={`/events/${event.id}`} className="col-span-2">
+                    <Button
+                      variant="outline"
+                      className="w-full border-cyan-600 text-cyan-700 hover:bg-cyan-50"
+                    >
+                      View Details
+                    </Button>
                   </Link>
 
                   {isPaid ? (
                     <Button
                       variant="destructive"
-                      className="w-1/2"
+                      className="col-span-2"
                       onClick={() => handleLeaveClick(event)}
                     >
                       Leave Event
                     </Button>
                   ) : (
                     <Button
-                      className="w-1/2"
-                      onClick={() => handlePayment(event.id)}
+                      className="col-span-2 w-full bg-slate-900 text-white hover:bg-cyan-800"
+                      onClick={() => handleBuyTicket(event.id)}
                       disabled={event.status !== "UPCOMING"}
                     >
-                      Join Now
+                      Buy Ticket
                     </Button>
                   )}
-                </div>
-              </CardContent>
-            </Card>
+                </>
+              }
+            />
           );
         })}
       </div>

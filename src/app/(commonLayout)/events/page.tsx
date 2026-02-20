@@ -6,6 +6,7 @@ import EventCard from "@/components/shared/EventCard";
 import TablePagination from "@/components/shared/TablePagination";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { getCookie } from "@/services/auth/tokenHandlers";
+import { getAllEvents } from "@/services/event/event.service";
 
 import { Metadata } from "next";
  
@@ -46,8 +47,6 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
     
     // Build query string from search params
     const queryParams = new URLSearchParams();
-    console.log(params, user, token, queryParams, "check params user query params")
-    console.log(user , "user here")
     if (params.searchTerm) queryParams.set("searchTerm", params.searchTerm);
     if (params.status) queryParams.set("status", params.status);
     if (params.location) queryParams.set("location", params.location);
@@ -57,45 +56,27 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
     if (params.sortBy) queryParams.set("sortBy", params.sortBy);
     if (params.sortOrder) queryParams.set("sortOrder", params.sortOrder);
 
-    // Make API call to backend with query params
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/v1/api";
-    const endpoint = `${API_BASE_URL}/events?${queryParams.toString()}`;
-  console.log(process.env.NEXT_PUBLIC_API_URL,process.env.NEXT_PUBLIC_API_URL,process.env.NEXT_PUBLIC_API_URL)
-    const response = await fetch(endpoint, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        cache: "no-store",
-    });
-
-    const events = await response.json();
-    console.log(events?.data, "events here")
-    // Fetch all locations (without filters) for the filter dropdown
-    const allLocationsEndpoint = `${API_BASE_URL}/events`;
-    const allLocationsResponse = await fetch(allLocationsEndpoint, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        cache: "no-store",
-    });
-    const allEventsData = await allLocationsResponse.json();
+    const eventsResponse = await getAllEvents(queryParams.toString());
+    const allEventsData = await getAllEvents();
 
     // Get unique locations from all events
-    const allLocations = allEventsData?.data?.data?.map((event: any) => event.location) || [];
+    const allLocations = allEventsData?.data?.map((event: any) => event.location) || [];
     const uniqueLocations = [...new Set(allLocations)];
 
     // Get unique event types from all events
-    const allTypes = allEventsData?.data?.data?.map((event: any) => event.type) || [];
+    const allTypes = allEventsData?.data?.map((event: any) => event.eventType) || [];
     const uniqueTypes = [...new Set(allTypes)];
+
+    const eventsData = eventsResponse?.data || [];
+    const eventsMeta = eventsResponse?.meta || { page: 1, limit: 10, total: 0 };
+    const totalPages = Math.max(1, Math.ceil((eventsMeta.total || 0) / (eventsMeta.limit || 10)));
 
     return (
         <section className="max-w-7xl mx-auto px-4">
             <div className="py-8 text-center">
                 {/* Heading */}
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                    Explore <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-pink-600">Latest Events</span>
+                    Explore <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-600 to-emerald-600">Latest Events</span>
                 </h2>
                 <p className="text-gray-600 mt-2 max-w-[500px] mx-auto">Discover the latest events and activities happening around you. Filter by location, type, status and more.</p>
             </div>
@@ -106,16 +87,16 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
             />
 
             {/* Results Count */}
-            {events?.data?.meta && (
+            {eventsResponse?.meta && (
                 <div className="py-4 text-sm text-gray-600">
-                    Showing {events.data.data.length} of {events.data.meta.total} events
+                    Showing {eventsData.length} of {eventsMeta.total} events
                     {params.searchTerm && ` for "${params.searchTerm}"`}
                 </div>
             )}
 
             {/* Grid */}
-            {events?.data?.length > 0 ? (
-                <EventCard events={events?.data} currentUser={user} token={token} />
+            {eventsData.length > 0 ? (
+                <EventCard events={{ data: { data: eventsData } }} currentUser={user} token={token} />
             ) : (
                 <div className="py-20 text-center">
                     <p className="text-gray-500 text-lg">No events found</p>
@@ -124,8 +105,8 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
             )}
 
             <TablePagination
-                currentPage={events?.data?.meta?.page || 1}
-                totalPages={events?.data?.meta?.page || 1}
+                currentPage={eventsMeta.page || 1}
+                totalPages={totalPages}
             />
 
         </section>
