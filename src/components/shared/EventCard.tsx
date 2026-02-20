@@ -1,5 +1,6 @@
  
 import { IEvent } from "@/types/event.type";
+import { UserRole } from "@/types/user";
 import EventCardClient from "./EventCardClient";
 
 interface IEventApiResponse {
@@ -12,7 +13,7 @@ interface ICurrentUser {
     id: string;
     email: string;
     fullName: string;
-    role: string;
+    role: UserRole;
     profileImage?: string | null;
 }
 
