@@ -163,10 +163,12 @@ export default function EventCardClient({
       </div>
 
       <DeleteConfirmationDialog
-        isOpen={isLeaveOpen}
-        onClose={() => {
-          setIsLeaveOpen(false);
-          setSelectedEvent(null);
+        open={isLeaveOpen}
+        onOpenChange={(open) => {
+          setIsLeaveOpen(open);
+          if (!open) {
+            setSelectedEvent(null);
+          }
         }}
         onConfirm={handleLeaveConfirm}
         title="Leave Event"
