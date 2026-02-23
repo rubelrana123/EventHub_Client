@@ -114,22 +114,6 @@ export async function updateParticipator(id: string, _prevState: any, formData: 
         contactNumber: formData.get("contactNumber") as string,
     };
 
-    /*
-    // Server-side validation
-        const validation = updateParticipatorZodSchema.safeParse(validationPayload);
-        if (!validation.success) {
-            const errors = validation.error.issues.map((err: any) => ({
-                field: err.path[0] as string,
-                message: err.message,
-            }));
-            return {
-                success: false,
-                message: "Validation failed",
-                formData: validationPayload,
-                errors,
-            };
-        }
-    */
 
     const validation = zodValidator(validationPayload, ParticipatorValidation.updateParticipator);
     if (!validation.success && validation.errors) {

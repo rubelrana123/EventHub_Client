@@ -64,24 +64,12 @@ const HostsTable = ({ hosts }: HostsTableProps) => {
       <ManagementTable
         data={hosts}
         columns={hostsColumns}
-        onView={handleView}
-        onEdit={handleEdit}
+        onView={handleView} 
         onDelete={handleDelete}
         getRowKey={(host) => host.id!}
         emptyMessage="No hosts found"
       />
-
-      {/* Edit Host Form Dialog */}
-      {/* <HostFormDialog
-        open={!!editingHost}
-        onClose={() => setEditingHost(null)}
-        host={editingHost!}
-        onSuccess={() => {
-          setEditingHost(null);
-          handleRefresh();
-        }}
-      /> */}
-
+ 
       {/* View Host Detail Dialog */}
       <HostViewDetailDialog
         open={!!viewingHost}

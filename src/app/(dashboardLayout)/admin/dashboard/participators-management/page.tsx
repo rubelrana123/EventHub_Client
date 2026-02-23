@@ -27,7 +27,7 @@ console.log("result from admin deep participator",participatorsResult )
       <ParticipatorsManagementHeader />
 
       {/* Search, Filters */}
-      <ParticipatorsFilter />
+      <ParticipatorsFilter searchFiled = "name,email" />
 
       <Suspense fallback={<TableSkeleton columns={8} rows={10} />}>
         <ParticipatorsTable participators={participatorsResult?.data?.data || []} />

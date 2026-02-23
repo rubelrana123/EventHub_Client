@@ -1,4 +1,5 @@
 export interface IParticipator {
+  [x: string]: ReactNode;
   id: string;
   email: string;
   name: string;

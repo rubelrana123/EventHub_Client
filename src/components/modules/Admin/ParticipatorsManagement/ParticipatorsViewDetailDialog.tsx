@@ -54,24 +54,21 @@ const ParticipatorViewDetailDialog = ({
             </Avatar>
 
             <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-3xl font-bold">{participator.name}</h2>
-
-              <p className="text-muted-foreground flex items-center gap-2 mt-1">
-                <Mail className="h-4 w-4" />
-                {participator.email}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
+              <div className="flex items-center justify-center sm:justify-start gap-3">
+                              <h2 className="text-3xl font-bold">{participator.name}</h2>
                 <Badge
                   variant={participator.isDeleted ? "destructive" : "default"}
                 >
                   {participator.isDeleted ? "Inactive" : "Active"}
                 </Badge>
-                <Badge variant="secondary">
-                  <Shield className="h-3 w-3 mr-1" />
-                  Participator
-                </Badge>
               </div>
+
+
+              <p className="text-muted-foreground flex items-center gap-2 mt-1">
+                <Mail className="h-4 w-4" />
+                {participator.email}
+              </p>
+ 
             </div>
           </div>
 

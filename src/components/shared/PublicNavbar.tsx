@@ -9,13 +9,16 @@ import MobileMenuButton from "./MobileMenuButton";
 export default async function PublicNavbar() {
   const accessToken = await getCookie("accessToken");
 
-  const navLinks = [
+  const publicNavLinks = [
     { name: "Home", path: "/" },
     { name: "Events", path: "/events" },
     { name: "Services", path: "/services" },
-    { name: "Contact", path: "/contact" },
-    { name : "Dashboard", path: "/dashboard" }
+    { name: "Contact", path: "/contact" }
   ];
+
+  const navLinks = accessToken
+    ? [...publicNavLinks, { name: "Dashboard", path: "/dashboard" }]
+    : publicNavLinks;
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-100">
