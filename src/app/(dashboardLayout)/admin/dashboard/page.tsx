@@ -1,7 +1,7 @@
 import { getAdmins } from "@/services/admin/adminsManagement";
-import { getEvents } from "@/services/admin/eventsManagement";
-import { getHosts } from "@/services/admin/hostsManagement";
-import { getParticipators } from "@/services/admin/participatorsManagement";
+
+import { getHosts } from "@/services/host/hostsManagement";
+import { getParticipators } from "@/services/participator/participatorsManagement";
 import { IEvent } from "@/types/event.type";
 import DashboardVisualGraphs from "@/components/modules/Dashboard/DashboardVisualGraphs";
 import {
@@ -13,6 +13,7 @@ import {
   UserRoundCheck,
   Users,
 } from "lucide-react";
+import { getEvents } from "@/services/event/event.service";
 
 type ApiResult<T> = {
   success?: boolean;

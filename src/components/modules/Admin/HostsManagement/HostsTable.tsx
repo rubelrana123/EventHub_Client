@@ -2,7 +2,7 @@
 
  
 import ManagementTable from "@/components/shared/ManagementTable";
-import { softDeleteHost } from "@/services/admin/hostsManagement";
+import { softDeleteHost } from "@/services/host/hostsManagement";
  
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";

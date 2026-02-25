@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { EventCard } from "./EventCard";
-import { getEvents } from "@/services/admin/eventsManagement";
+import { getEvents } from "@/services/event/event.service";
  
 export default async function FeaturedEvent() {
   // const events = testData?.data || [];

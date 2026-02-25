@@ -1,5 +1,5 @@
-import ParticipatorEventsTable from "@/components/modules/ParticipatorDashboard/ParticipatorEventsTable";
-import ParticipatorDataGraphs from "@/components/modules/ParticipatorDashboard/ParticipatorDataGraphs";
+import ParticipatorEventsTable from "@/components/modules/Participator/ParticipatorEventsTable";
+import ParticipatorDataGraphs from "@/components/modules/Participator/ParticipatorDataGraphs";
 import { getParticipatorDashboardData } from "@/services/participator/dashboard.service";
 
 export default async function MyEventPage() {

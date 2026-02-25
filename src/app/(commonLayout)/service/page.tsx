@@ -1,7 +1,6 @@
-import React from 'react'
 
 export default function page() {
   return (
-    <div>host page</div>
+    <div>page</div>
   )
 }

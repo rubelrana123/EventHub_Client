@@ -11,7 +11,7 @@ import { participatorsColumns } from "./ParticipatorsColumn";
 import ParticipatorViewDetailDialog from "./ParticipatorsViewDetailDialog";
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { IParticipator } from "@/types/participator.type";
-import { softDeleteParticipator } from "@/services/admin/participatorsManagement";
+import { softDeleteParticipator } from "@/services/participator/participatorsManagement";
  
 interface ParticipatorsTableProps {
   participators: IParticipator[];

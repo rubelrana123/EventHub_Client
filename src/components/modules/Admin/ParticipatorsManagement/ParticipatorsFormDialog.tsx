@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { updateParticipator } from "@/services/admin/participatorsManagement";
+import { updateParticipator } from "@/services/participator/participatorsManagement";
 import { IParticipator } from "@/types/participator.type";
 
 import { Textarea } from "@/components/ui/textarea";

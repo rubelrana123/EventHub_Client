@@ -8,9 +8,10 @@ import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDial
 import ManagementCardGrid from "./EventCard";
 import { eventsColumns } from "./EventsColumn";
 import { IEvent } from "@/types/event.type";
-import { softDeleteEvent } from "@/services/admin/eventsManagement";
-import EventViewDetailDialog from "./EventViewDetailDialog";
 
+import EventViewDetailDialog from "./EventViewDetailDialog";
+import { softDeleteEvent } from "@/services/event/event.service";
+ 
 interface EventsTableProps {
   events: IEvent[];
 }

@@ -149,7 +149,7 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
             <Button
               onClick={handleBuyNow}
               disabled={isBooking}
-              className="w-full bg-slate-900 text-white hover:bg-cyan-800 shadow-lg shadow-cyan-100"
+              className="w-full bg-primary text-white  shadow-cyan-100"
             >
               {isBooking ? "Processing..." : "Buy Ticket"}
             </Button>
@@ -157,15 +157,15 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
             <p className="text-xs text-center text-gray-400 mt-4">
               100% secure payment
             </p>
-
-            <div className="grid grid-cols-2 gap-4 mt-4">
+{/* //under the construction */}
+            {/* <div className="grid grid-cols-2 gap-4 mt-4">
               <Button variant="outline" size="sm">
                 <Heart className="h-4 w-4 mr-1" /> Save
               </Button>
               <Button variant="outline" size="sm">
                 <Share2 className="h-4 w-4 mr-1" /> Share
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ import {
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createEvent, updateEvent } from "@/services/admin/eventsManagement";
+import { createEvent, updateEvent } from "@/services/event/event.service";
  
 import { IEvent } from "@/types/event.type";
 

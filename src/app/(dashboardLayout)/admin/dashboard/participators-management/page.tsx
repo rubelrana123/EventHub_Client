@@ -6,7 +6,7 @@ import ParticipatorsTable from "@/components/modules/Admin/ParticipatorsManageme
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getParticipators } from "@/services/admin/participatorsManagement";
+import { getParticipators } from "@/services/participator/participatorsManagement";
 import { Suspense } from "react";
 
 const  ParticipatorsPage = async ({

@@ -7,7 +7,7 @@ import HostsTable from "@/components/modules/Admin/HostsManagement/HostsTable";
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getHostApplications, getHosts } from "@/services/admin/hostsManagement";
+import { getHostApplications, getHosts } from "@/services/host/hostsManagement";
  
 import { Suspense } from "react";
 

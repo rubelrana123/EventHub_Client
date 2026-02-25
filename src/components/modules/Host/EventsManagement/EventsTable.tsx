@@ -5,11 +5,12 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import DeleteConfirmationDialog from "@/components/shared/DeleteConfirmationDialog";
 import { IEvent } from "@/types/event.type";
-import { softDeleteEvent } from "@/services/admin/eventsManagement";
+ 
 import EventFormDialog from "@/components/modules/Admin/EventsManagement/EventsFormDialog";
 import EventViewDetailDialog from "@/components/modules/Admin/EventsManagement/EventViewDetailDialog";
 import ManagementCardGrid from "@/components/modules/Admin/EventsManagement/EventCard";
 import { eventsColumns } from "@/components/modules/Admin/EventsManagement/EventsColumn";
+import { softDeleteEvent } from "@/services/event/event.service";
 
 interface HostEventsTableProps {
   events: IEvent[];

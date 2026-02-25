@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createHost, updateHost } from "@/services/admin/hostsManagement";
+import { createHost, updateHost } from "@/services/host/hostsManagement";
 import { IHost } from "@/types/host.type";
  
  

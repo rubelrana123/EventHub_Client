@@ -1,11 +1,12 @@
 import DashboardVisualGraphs from "@/components/modules/Dashboard/DashboardVisualGraphs";
 import { Badge } from "@/components/ui/badge";
-import { getEvents } from "@/services/admin/eventsManagement";
+
 import {
   getMyEventParticipators,
   getMyEventReviews,
-} from "@/services/admin/hostsManagement";
+} from "@/services/host/hostsManagement";
 import { getUserInfo } from "@/services/auth/getUserInfo";
+import { getEvents } from "@/services/event/event.service";
 import { IEvent } from "@/types/event.type";
 import { CalendarClock, MessageSquare, Star, Users } from "lucide-react";
 

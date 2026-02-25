@@ -1,7 +1,7 @@
 import Link from "next/link";
-import DashboardStatsGrid from "@/components/modules/ParticipatorDashboard/DashboardStatsGrid";
+import DashboardStatsGrid from "@/components/modules/Participator/DashboardStatsGrid";
 import DashboardVisualGraphs from "@/components/modules/Dashboard/DashboardVisualGraphs";
-import ParticipatorDataGraphs from "@/components/modules/ParticipatorDashboard/ParticipatorDataGraphs";
+import ParticipatorDataGraphs from "@/components/modules/Participator/ParticipatorDataGraphs";
 import { formatDashboardCurrency } from "@/lib/participator-dashboard.utils";
 import { getParticipatorDashboardData } from "@/services/participator/dashboard.service";
 

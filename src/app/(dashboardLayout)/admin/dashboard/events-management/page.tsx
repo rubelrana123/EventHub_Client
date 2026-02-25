@@ -5,9 +5,9 @@ import EventsManagementHeader from "@/components/modules/Admin/EventsManagement/
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getEvents } from "@/services/admin/eventsManagement";
  
 import { Suspense } from "react";
+import { getEvents } from "@/services/event/event.service";
 
 const  EventsManagementPage = async ({
   searchParams,

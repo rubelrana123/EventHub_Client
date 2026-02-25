@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDateTime, queryStringFormatter } from "@/lib/formatters";
-import { getMyEventParticipators } from "@/services/admin/hostsManagement";
+import { getMyEventParticipators } from "@/services/host/hostsManagement";
 
 interface MyEventParticipator {
   id: string;

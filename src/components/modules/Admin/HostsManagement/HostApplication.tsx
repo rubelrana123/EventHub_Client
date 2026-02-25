@@ -1,5 +1,5 @@
 import HostApplicationTable from "./HostApplicationTable";
-import { changeHostApplicationStatus } from "@/services/admin/hostsManagement";
+import { changeHostApplicationStatus } from "@/services/host/hostsManagement";
 
 export default function HostApplication({
   hostApplicationsResult,

@@ -1,10 +1,10 @@
-import DashboardStatsGrid from "@/components/modules/ParticipatorDashboard/DashboardStatsGrid";
-import ParticipatorDataGraphs from "@/components/modules/ParticipatorDashboard/ParticipatorDataGraphs";
-import ProfileSummaryCard from "@/components/modules/ParticipatorDashboard/ProfileSummaryCard";
+import DashboardStatsGrid from "@/components/modules/Participator/DashboardStatsGrid";
+import ParticipatorDataGraphs from "@/components/modules/Participator/ParticipatorDataGraphs";
+import ProfileSummaryCard from "@/components/modules/Participator/ProfileSummaryCard";
 import { formatDashboardCurrency } from "@/lib/participator-dashboard.utils";
 import { getParticipatorDashboardData } from "@/services/participator/dashboard.service";
 
-export default async function MyProfilePage() {
+export default async function MyAnalyticsPage() {
   const dashboardData = await getParticipatorDashboardData();
   const { profile, summary } = dashboardData;
 

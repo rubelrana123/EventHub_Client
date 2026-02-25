@@ -4,8 +4,9 @@ import HostEventsTable from "@/components/modules/Host/EventsManagement/EventsTa
 import TablePagination from "@/components/shared/TablePagination";
 import { TableSkeleton } from "@/components/shared/TableSkeleton";
 import { queryStringFormatter } from "@/lib/formatters";
-import { getEvents } from "@/services/admin/eventsManagement";
+ 
 import { getUserInfo } from "@/services/auth/getUserInfo";
+import { getEvents } from "@/services/event/event.service";
 import { Suspense } from "react";
 
 const HostEventsManagementPage = async ({

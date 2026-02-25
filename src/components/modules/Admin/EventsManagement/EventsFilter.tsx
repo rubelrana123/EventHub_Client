@@ -1,7 +1,7 @@
 "use client";
 
 import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
-import RefreshButton from "@/components/shared/RefreshButton";
+ 
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
 
@@ -11,12 +11,8 @@ const EventsFilter = () => {
       {/* Row 1: Search and Refresh */}
       <div className="flex items-center gap-3">
         <SearchFilter paramName="searchTerm" placeholder="Search events..." />
-        <RefreshButton />
-      </div>
-
-      {/* Row 2: Filter Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <SelectFilter
+        {/* <RefreshButton /> */}
+                <SelectFilter
           paramName="eventType"
           placeholder="Filter by event type"
           defaultValue="All"
@@ -37,6 +33,11 @@ const EventsFilter = () => {
           ]}
         />
         <ClearFiltersButton />
+      </div>
+
+      {/* Row 2: Filter Controls */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+
       </div>
     </div>
   );
