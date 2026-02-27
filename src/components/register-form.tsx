@@ -14,11 +14,12 @@ const RegisterForm = () => {
 
   useEffect(() => {
     if (state && !state.success && state.message) {
-      toast.error(state.message);
+      toast.error(state.message || "Signup failed. Please review your information and try again.");
     }
   }, [state]);
   return (
     <form action={formAction}>
+      <input type="hidden" name="authSource" value="signup" />
       <FieldGroup>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Name */}

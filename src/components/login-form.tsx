@@ -9,16 +9,17 @@ import { Input } from "./ui/input";
 //login form component`
 const LoginForm = ({ redirect }: { redirect?: string }) => {
   const [state, formAction, isPending] = useActionState(loginUser, null);
-  console.log("form login", state, formAction, isPending)
+
   useEffect(() => {
     if (state && !state.success && state.message) {
-      toast.error(state.message);
+      toast.error(state.message || "Login failed. Please check your credentials and try again.");
     }
   }, [state]);
 
   return (
     <form action={formAction}>
       {redirect && <input type="hidden" name="redirect" value={redirect} />}
+      <input type="hidden" name="authSource" value="login" />
       <FieldGroup>
         <div className="grid grid-cols-1 gap-4">
           {/* Email */}

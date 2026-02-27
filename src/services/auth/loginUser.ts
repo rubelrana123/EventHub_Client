@@ -13,34 +13,38 @@ import { loginValidationZodSchema } from "@/zod/authValidation";
 import { serverFetch } from "@/lib/serverFetch";
 import { UserRole } from "@/types/user";
 
-
+const appendQueryParams = (
+  path: string,
+  params: Record<string, string>
+): string => {
+  const queryString = new URLSearchParams(params).toString();
+  if (!queryString) {
+    return path;
+  }
+  return path.includes("?") ? `${path}&${queryString}` : `${path}?${queryString}`;
+};
 
 export const loginUser = async (_currentState: any, formData: any): Promise<any> => {
-   console.log("inner login")
     try {
         const redirectTo = formData.get('redirect') || null;
+        const authSource = formData.get("authSource");
         let accessTokenObject: null | any = null;
         let refreshTokenObject: null | any = null;
         const payload = {
             email: formData.get('email'),
             password: formData.get('password'),
         }
-
-        console.log("login form payload form", payload)
-
         if (zodValidator(payload, loginValidationZodSchema).success === false) {
             return zodValidator(payload, loginValidationZodSchema);
         }
 
         const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
-       console.log(validatedPayload, "validation form payload");
         const res = await serverFetch.post("/auth/login", {
             body: JSON.stringify(validatedPayload),
             headers: {
                 "Content-Type": "application/json",
             }
         });
-       console.log(res, "resposnse login")
         const result = await res.json();
 
         const setCookieHeaders = res.headers.getSetCookie();
@@ -85,7 +89,6 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
             sameSite: refreshTokenObject['SameSite'] || "none",
         });
         const verifiedToken: JwtPayload | string = jwt.verify(accessTokenObject.accessToken, process.env.JWT_SECRET as string);
-        console.log(verifiedToken, "verified token")
         if (typeof verifiedToken === "string") {
             throw new Error("Invalid token");
 
@@ -111,16 +114,20 @@ export const loginUser = async (_currentState: any, formData: any): Promise<any>
         }
 
 
+        const loginQueryFlags: Record<string, string> = { loggedIn: "true" };
+        if (authSource === "signup") {
+            loginQueryFlags.signedUp = "true";
+        }
 
         if (redirectTo) {
             const requestedPath = redirectTo.toString();
             if (isValidRedirectForRole(requestedPath, userRole)) {
-                redirect(`${requestedPath}?loggedIn=true`);
+                redirect(appendQueryParams(requestedPath, loginQueryFlags));
             } else {
-                redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+                redirect(appendQueryParams(getDefaultDashboardRoute(userRole), loginQueryFlags));
             }
         } else {
-            redirect(`${getDefaultDashboardRoute(userRole)}?loggedIn=true`);
+            redirect(appendQueryParams(getDefaultDashboardRoute(userRole), loginQueryFlags));
         }
 
     } catch (error: any) {

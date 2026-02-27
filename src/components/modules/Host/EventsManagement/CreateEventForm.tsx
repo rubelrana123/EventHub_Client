@@ -27,19 +27,18 @@ const CreateEventForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(createEvent, null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  console.log("CreateEventForm state:", state);
-  
-  console.log(selectedFile,formAction, "selected file")
+
   useEffect(() => {
     if (state?.success) {
-      toast.success(state.message || "Event created successfully");
-      router.push("/host/dashboard/events-management");
+      router.push("/host/dashboard/events-management?eventCreated=true");
       router.refresh();
       return;
     }
 
     if (state?.message && !state.success) {
-      toast.error(state.message);
+      toast.error(
+        state.message || "Event creation failed. Please correct the form and try again."
+      );
     }
   }, [router, state]);
 

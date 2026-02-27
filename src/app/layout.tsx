@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
+import { Toaster } from "sonner";
+import ActionToastListener from "@/components/shared/ActionToastListener";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,6 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster position="top-right" richColors closeButton />
+        <Suspense fallback={null}>
+          <ActionToastListener />
+        </Suspense>
         {children}
       </body>
     </html>
