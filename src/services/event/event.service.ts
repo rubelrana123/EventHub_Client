@@ -44,6 +44,8 @@ export async function createEvent(_prevState: any, formData: FormData) {
   if (validationPayload.bannerPhoto) {
     payload.append("file", validationPayload.bannerPhoto);
   }
+  console.log(payload, " with image payload");
+
 
   try {
     const response = await serverFetch.post("/event/create-event", {
@@ -85,6 +87,9 @@ export async function getEvents(queryString?: string) {
   }
 }
 
+// Backward-compatible aliases for existing page imports
+export const getAllEvents = getEvents;
+
 
   //  GET EVENT BY ID
   //  API: GET /event/:id
@@ -104,6 +109,9 @@ export async function getEventById(id: string) {
     };
   }
 }
+
+// Backward-compatible alias for existing page imports
+export const getEventDetailsById = getEventById;
 
 /* ================================
    UPDATE EVENT
@@ -209,4 +217,3 @@ export async function deleteEvent(id: string) {
     };
   }
 }
-

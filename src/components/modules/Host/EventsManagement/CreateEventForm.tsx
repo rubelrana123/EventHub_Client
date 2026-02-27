@@ -12,12 +12,24 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
+const MAX_BANNER_SIZE_BYTES = 20 * 1024 * 1024;
+const EVENT_TYPES = [
+  { label: "Tech", value: "tech" },
+  { label: "Business", value: "business" },
+  { label: "Programming", value: "programming" },
+  { label: "Marketing", value: "marketing" },
+  { label: "Design", value: "design" },
+];
+
+
 const CreateEventForm = () => {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(createEvent, null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
+  console.log("CreateEventForm state:", state);
+  
+  console.log(selectedFile,formAction, "selected file")
   useEffect(() => {
     if (state?.success) {
       toast.success(state.message || "Event created successfully");
@@ -116,12 +128,21 @@ const CreateEventForm = () => {
 
         <Field>
           <FieldLabel htmlFor="eventType">Event Type</FieldLabel>
-          <Input
+          <select
             id="eventType"
             name="eventType"
-            placeholder="Tech / Business"
             defaultValue={state?.formData?.eventType ?? ""}
-          />
+            className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-9 w-full rounded-md border px-3 py-1 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <option value="" disabled>
+              Select event type
+            </option>
+            {EVENT_TYPES.map((type) => (
+              <option key={type.value} value={type.value}>
+                {type.label}
+              </option>
+            ))}
+          </select>
           <InputFieldError field="eventType" state={state} />
         </Field>
 
@@ -141,7 +162,18 @@ const CreateEventForm = () => {
             name="file"
             type="file"
             accept="image/*"
-            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+
+              if (file && file.size > MAX_BANNER_SIZE_BYTES) {
+                toast.error("Banner photo must be 20MB or smaller.");
+                setSelectedFile(null);
+                e.target.value = "";
+                return;
+              }
+
+              setSelectedFile(file);
+            }}
           />
         </Field>
       </div>

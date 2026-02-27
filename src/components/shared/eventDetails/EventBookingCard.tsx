@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar, Clock, MapPin, Tag, X } from "lucide-react";
-import DeleteConfirmationDialog from "@/components/modals/DeleteConfirmationDialog";
 import { useState } from "react";
+import DeleteConfirmationDialog from "../DeleteConfirmationDialog";
 
 interface ICurrentUser {
     id: string;
@@ -232,8 +232,8 @@ export default function EventBookingCard({
                         Leave Event
                     </Button>
                     <DeleteConfirmationDialog
-                        isOpen={isLeaveOpen}
-                        onClose={onLeaveClose}
+                        open={isLeaveOpen}
+                        onOpenChange={onLeaveClose}
                         onConfirm={onLeaveConfirm}
                         title="Leave Event"
                         description="Are you sure you want to leave this event? This action cannot be undone."

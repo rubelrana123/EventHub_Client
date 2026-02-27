@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, Edit2, Trash2 } from "lucide-react";
-import ReviewModal from "@/components/modals/ReviewModal";
-import DeleteConfirmationDialog from "@/components/modals/DeleteConfirmationDialog";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import DeleteConfirmationDialog from "../DeleteConfirmationDialog";
+import ReviewModal from "@/components/modals/ReviewModal";
 
 interface EventReview {
     id: string;
@@ -194,7 +194,7 @@ export default function EventReviews({ event, eventAverageRating, currentUser, t
                                 {/* Review Comment */}
                                 {review.comment && (
                                     <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
-                                        "{review.comment}"
+                                        {review.comment}
                                     </p>
                                 )}
                             </div>
@@ -227,8 +227,8 @@ export default function EventReviews({ event, eventAverageRating, currentUser, t
 
         {/* Delete Confirmation Dialog */}
         <DeleteConfirmationDialog
-            isOpen={isDeleteDialogOpen}
-            onClose={() => {
+            open={isDeleteDialogOpen}
+            onOpenChange={() => {
                 setIsDeleteDialogOpen(false);
                 setDeletingReviewId(null);
             }}
