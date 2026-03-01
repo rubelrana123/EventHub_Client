@@ -4,11 +4,26 @@ import { serverFetch } from "@/lib/serverFetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { eventCreationSchema, eventUpdateSchema } from "@/zod/event.validation";
 
+const toIsoDateTime = (value: string | undefined | null): string | undefined => {
+  if (!value) {
+    return undefined;
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
+  }
+
+  return date.toISOString();
+};
+
 export async function createEvent(_prevState: any, formData: FormData) {
+  const normalizedDateTime = toIsoDateTime(formData.get("dateTime") as string);
+
   const validationPayload = {
     title: formData.get("title") as string,
     description: formData.get("description") as string,
-    dateTime: formData.get("dateTime") as string,
+    dateTime: normalizedDateTime as string,
     location: formData.get("location") as string,
     minParticipants: Number(formData.get("minParticipants")),
     maxParticipants: Number(formData.get("maxParticipants")),
@@ -122,10 +137,13 @@ export async function updateEvent(
   _prevState: any,
   formData: FormData
 ) {
+  const rawDateTime = formData.get("dateTime") as string | null;
+  const normalizedDateTime = rawDateTime ? toIsoDateTime(rawDateTime) : undefined;
+
   const validationPayload = {
     title: formData.get("title") as string | undefined,
     description: formData.get("description") as string | undefined,
-    dateTime: formData.get("dateTime") as string | undefined,
+    dateTime: normalizedDateTime,
     location: formData.get("location") as string | undefined,
     minParticipants: formData.get("minParticipants")
       ? Number(formData.get("minParticipants"))

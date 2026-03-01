@@ -273,3 +273,36 @@ export async function changeHostApplicationStatus(
         };
     }
 }
+
+export async function applyForHost(_prevState: any, formData: FormData) {
+    const message = (formData.get("message") as string | null)?.trim() || "";
+
+    if (!message) {
+        return {
+            success: false,
+            message: "Please provide a short message about why you want to become a host.",
+            formData: { message },
+            errors: [{ field: "message", message: "Message is required." }],
+        };
+    }
+
+    try {
+        const response = await serverFetch.post("/host-application", {
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message }),
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message:
+                process.env.NODE_ENV === "development"
+                    ? error.message
+                    : "Failed to submit host application",
+            formData: { message },
+        };
+    }
+}

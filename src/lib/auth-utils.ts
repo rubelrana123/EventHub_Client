@@ -38,7 +38,7 @@ export const adminProtectedRoutes: RouteConfig = {
 /** Routes accessible only by PARTICIPATOR role */
 export const participatorProtectedRoutes: RouteConfig = {
     patterns: [/^\/dashboard/],
-    exact: [],
+    exact: ["/apply-for-host"],
 }
 
 /**

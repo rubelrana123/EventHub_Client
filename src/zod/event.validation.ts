@@ -6,17 +6,17 @@ import { z } from "zod";
 export const eventCreationSchema = z.object({
   title: z
     .string({ error: "Title is required" })
-    .min(5, "Title must be at least 5 characters"),
+    .min(1, "Title is required"),
 
   description: z
     .string({ error: "Description is required" })
-    .min(20, "Description must be at least 20 characters"),
+    .min(1, "Description is required"),
 
   dateTime: z.string({ error: "Date & time is required" }),
 
   location: z
     .string({ error: "Location is required" })
-    .min(3, "Location must be at least 3 characters"),
+    .min(1, "Location is required"),
 
   eventType: z
     .string({ error: "Event type is required" })
@@ -40,9 +40,6 @@ export const eventCreationSchema = z.object({
     .number({ error: "Joining fee must be a number" })
     .int()
     .min(0, "Joining fee cannot be negative"),
-
-  // Banner photo is optional
-  bannerPhoto: z.string().optional(),
 });
 
 // ===================================================
