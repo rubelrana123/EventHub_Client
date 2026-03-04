@@ -90,6 +90,12 @@ export const participatorNavItems: NavSection[] = [
         roles: ["PARTICIPATOR"],
       },
       {
+        title: "My Ticket",
+        href: "/dashboard/my-ticket",
+        icon: "Ticket",
+        roles: ["PARTICIPATOR"],
+      },
+      {
         title: "Apply For Host",
         href: "/apply-for-host",
         icon: "BadgeCheck",

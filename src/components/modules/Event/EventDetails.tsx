@@ -43,6 +43,7 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
       return;
     }
 
+    sessionStorage.setItem("paymentReturnUrl", `/events/${event.id}`);
     toast.success("Redirecting to payment page...");
     window.location.href = result.data.paymentUrl;
   };

@@ -4,22 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { revalidate } from "@/lib/revalidate";
 import { CheckCircle2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 const PaymentSuccessContent = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [countdown, setCountdown] = useState(5);
+  const returnUrlRef = useRef("/dashboard/my-events");
 
   useEffect(() => {
-    // Get return URL from session storage only on client
+    // Refresh participator pages that are cached by tag.
     revalidate("my-event");
+    revalidate("my-events");
+
+    const eventId = searchParams.get("eventId");
     const storedUrl =
       sessionStorage.getItem("paymentReturnUrl") ||
-      "/dashboard/my-event";
+      (eventId ? `/events/${eventId}` : "/dashboard/my-events");
+
+    returnUrlRef.current = storedUrl;
     sessionStorage.removeItem("paymentReturnUrl");
 
-    // Start countdown
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
@@ -30,7 +36,6 @@ const PaymentSuccessContent = () => {
       });
     }, 1000);
 
-    // Redirect after countdown
     const redirectTimer = setTimeout(() => {
       router.push(storedUrl);
     }, 5000);
@@ -39,14 +44,10 @@ const PaymentSuccessContent = () => {
       clearInterval(timer);
       clearTimeout(redirectTimer);
     };
-  }, [router]);
+  }, [router, searchParams]);
 
   const handleManualRedirect = () => {
-    const storedUrl =
-      sessionStorage.getItem("paymentReturnUrl") ||
-      "/dashboard/my-event";
-    sessionStorage.removeItem("paymentReturnUrl");
-    router.push(storedUrl);
+    router.push(returnUrlRef.current);
   };
 
   return (
@@ -93,7 +94,7 @@ const PaymentSuccessContent = () => {
               className="w-full bg-green-600 hover:bg-green-700"
               size="lg"
             >
-              View My Appointments
+              View My Events
             </Button>
           </div>
         </CardContent>

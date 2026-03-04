@@ -73,6 +73,7 @@ export default function EventCardClient({
         return;
       }
 
+      sessionStorage.setItem("paymentReturnUrl", `/events/${eventId}`);
       toast.success("Redirecting to payment page...");
       window.location.href = result.data.paymentUrl;
     } catch (error) {
