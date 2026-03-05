@@ -37,7 +37,7 @@ const PaymentSuccessContent = () => {
     }, 1000);
 
     const redirectTimer = setTimeout(() => {
-      router.push(storedUrl);
+      router.push("/dashboard/my-events");
     }, 5000);
 
     return () => {
