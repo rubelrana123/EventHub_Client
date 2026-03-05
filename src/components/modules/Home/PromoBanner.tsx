@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 export default function PromoBanner() {
@@ -28,12 +29,15 @@ export default function PromoBanner() {
                     spectacular weekend. Don&apos;t miss out on the event of the
                     year.
                   </p>
-                  <Button
+                  <Link href="/events/">
+                   <Button
                     size="lg"
                     className="bg-white text-[#444444] hover:bg-gray-100 border-none"
                   >
                     Get Tickets Now
-                  </Button>
+                  </Button>                 
+                  </Link>
+
                 </div>
               </div>
             </div>

@@ -72,7 +72,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
     const totalPages = Math.max(1, Math.ceil((eventsMeta.total || 0) / (eventsMeta.limit || 10)));
 
     return (
-        <section className="max-w-7xl mx-auto px-4">
+        <section className="max-w-7xl mx-auto px-4 py-3">
             <div className="py-8 text-center">
                 {/* Heading */}
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">

@@ -82,9 +82,9 @@ export default function HomePage() {
       <main className="flex-grow">
  
       <Hero/>
-      <ChooseUS/>
       <PromoBanner/>
       <FeaturedEvent/>
+      <ChooseUS/>
       <Testimonials/>
       <Newsletter/>
  
