@@ -1,6 +1,5 @@
 import {
     EventCardSkeleton,
-    PageHeaderSkeleton,
     SkeletonGrid,
 } from "@/components/shared/skeletons";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -28,4 +27,3 @@ export default function HomeEventsSkeleton() {
         </section>
     );
 }
-

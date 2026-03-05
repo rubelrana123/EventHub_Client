@@ -21,8 +21,6 @@ import {
   User,
   MapPin,
   CalendarDays,
-  Wallet,
-  Users,
 } from "lucide-react";
 
  

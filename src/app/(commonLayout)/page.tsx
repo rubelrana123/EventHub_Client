@@ -5,8 +5,6 @@ import { Hero } from '@/components/modules/Home/Hero'
 import Newsletter from '@/components/modules/Home/NewsLetter'
 import PromoBanner from '@/components/modules/Home/PromoBanner'
 import Testimonials from '@/components/modules/Home/Testimonials'
-import { Button } from '@/components/ui/button' 
-import Image from 'next/image'
 export default function HomePage() {
   const events = [
     {

@@ -17,7 +17,6 @@ import {
   Calendar,
   Mail,
   Phone,
-  Shield,
   User,
   MapPin,
   CalendarDays,

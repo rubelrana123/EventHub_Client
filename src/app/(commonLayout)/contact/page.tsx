@@ -10,7 +10,6 @@ import {
   MapPin,
   Send,
 } from "lucide-react";
-import Newsletter from "@/components/modules/Home/NewsLetter";
 
 const Contact = () => {
   return (
@@ -104,7 +103,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      <Newsletter   />
+      {/* <Newsletter   /> */}
     </section>
   );
 };

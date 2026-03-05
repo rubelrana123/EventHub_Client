@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface IParticipator {
   id: string;
   email: string;

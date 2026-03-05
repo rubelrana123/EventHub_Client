@@ -1,5 +1,3 @@
- 
-import { updateHost } from "@/services/host/hostsManagement";
 import { z } from "zod";
 
 const createHostZodSchema = z.object({
