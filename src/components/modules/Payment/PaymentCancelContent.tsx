@@ -12,6 +12,7 @@ const PaymentCancelContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const eventId = searchParams.get("eventId");
+  const quantity = Number(searchParams.get("quantity") || 1);
   const [isRetrying, setIsRetrying] = useState(false);
 
   const handleRetry = async () => {
@@ -22,7 +23,9 @@ const PaymentCancelContent = () => {
 
     try {
       setIsRetrying(true);
-      const result = await bookEvent(eventId);
+      const retryQuantity =
+        Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+      const result = await bookEvent(eventId, retryQuantity);
 
       if (!result?.success) {
         toast.error(result?.message || "Payment initiation failed");

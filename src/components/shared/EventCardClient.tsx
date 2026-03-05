@@ -122,7 +122,7 @@ export default function EventCardClient({
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
         {events?.data?.data?.map((event: any) => {
-          const isPaid = hasUserPaid(event);
+          
 
           return (
             <UnifiedEventCard
@@ -139,23 +139,6 @@ export default function EventCardClient({
                     </Button>
                   </Link>
 
-                  {isPaid ? (
-                    <Button
-                      variant="destructive"
-                      className="col-span-2"
-                      onClick={() => handleLeaveClick(event)}
-                    >
-                      Leave Event
-                    </Button>
-                  ) : (
-                    <Button
-                      className="col-span-2 w-full bg-slate-900 text-white hover:bg-cyan-800"
-                      onClick={() => handleBuyTicket(event.id)}
-                      disabled={event.status !== "UPCOMING"}
-                    >
-                      Buy Ticket
-                    </Button>
-                  )}
                 </>
               }
             />

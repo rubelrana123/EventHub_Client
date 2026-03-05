@@ -203,7 +203,7 @@ export async function deleteParticipator(id: string) {
     }
 }
 
-export async function bookEvent(eventId: string) {
+export async function bookEvent(eventId: string, quantity = 1) {
   try {
     const accessToken = await getCookie("accessToken");
     if (!accessToken) {
@@ -215,7 +215,7 @@ export async function bookEvent(eventId: string) {
 
     const response = await serverFetch.post(`/event/${eventId}/join`, {
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ eventId }),
+      body: JSON.stringify({ eventId, quantity }),
     });
     const result = await response.json();
 

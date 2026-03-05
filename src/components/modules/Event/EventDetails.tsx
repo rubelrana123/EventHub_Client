@@ -3,17 +3,16 @@
 import {
   Calendar,
   MapPin,
-  Share2,
-  Heart,
   User,
   Info,
   Tag,
   Star,
+  Minus,
+  Plus,
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { bookEvent } from "@/services/participator/bookEvent";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface EventDetailsPageProps {
@@ -22,30 +21,13 @@ interface EventDetailsPageProps {
 }
 
 export default function EventDetailsPage({ event }: EventDetailsPageProps) {
-  const [isBooking, setIsBooking] = useState(false);
+  const router = useRouter();
+  const [quantity, setQuantity] = useState(1);
 
-  const handleBuyNow = async () => {
-    if (isBooking) return;
+  const maxQuantity = Math.max(1, Number(event.availableSeats || 1));
 
-    setIsBooking(true);
-
-    const result = await bookEvent(event.id);
-    console.log("Booking result:", result);
-    if (!result?.success) {
-      toast.error(result?.message || "Booking failed");
-      setIsBooking(false);
-      return;
-    }
-
-    if (!result?.data?.paymentUrl) {
-      toast.error("Payment URL not found");
-      setIsBooking(false);
-      return;
-    }
-
-    sessionStorage.setItem("paymentReturnUrl", `/events/${event.id}`);
-    toast.success("Redirecting to payment page...");
-    window.location.href = result.data.paymentUrl;
+  const handlePurchaseTicket = () => {
+    router.push(`/events/${event.id}/checkout?quantity=${quantity}`);
   };
 
   const dateObj = new Date(event.dateTime);
@@ -147,12 +129,44 @@ export default function EventDetailsPage({ event }: EventDetailsPageProps) {
               Available Seats: <strong>{event.availableSeats}</strong>
             </p>
 
+            <div className="mb-4">
+              <p className="mb-2 text-sm font-medium text-slate-700">Quantity</p>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                  disabled={quantity <= 1}
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <div className="min-w-12 rounded-md border px-3 py-2 text-center font-semibold">
+                  {quantity}
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={() =>
+                    setQuantity((prev) => Math.min(maxQuantity, prev + 1))
+                  }
+                  disabled={quantity >= maxQuantity}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="mt-2 text-xs text-slate-500">
+                Total: ${(Number(event.joiningFee) * quantity).toFixed(2)}
+              </p>
+            </div>
+
             <Button
-              onClick={handleBuyNow}
-              disabled={isBooking}
+              onClick={handlePurchaseTicket}
+              disabled={maxQuantity < 1}
               className="w-full bg-primary text-white  shadow-cyan-100"
             >
-              {isBooking ? "Processing..." : "Buy Ticket"}
+              Purchase Ticket
             </Button>
 
             <p className="text-xs text-center text-gray-400 mt-4">

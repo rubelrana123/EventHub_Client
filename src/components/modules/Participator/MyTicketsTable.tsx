@@ -30,10 +30,12 @@ interface MyTicketsTableProps {
 const MyTicketsTable = ({ tickets }: MyTicketsTableProps) => {
   const [repayingId, setRepayingId] = useState<string>("");
 
-  const handleRepay = async (eventId: string) => {
+  const handleRepay = async (eventId: string, quantity: number) => {
     try {
       setRepayingId(eventId);
-      const result = await bookEvent(eventId);
+      const retryQuantity =
+        Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+      const result = await bookEvent(eventId, retryQuantity);
 
       if (!result?.success) {
         toast.error(result?.message || "Payment initiation failed");
@@ -70,6 +72,7 @@ const MyTicketsTable = ({ tickets }: MyTicketsTableProps) => {
               <TableHead className="px-4">Event</TableHead>
               <TableHead className="px-4">Event Date</TableHead>
               <TableHead className="px-4">Amount</TableHead>
+              <TableHead className="px-4">Qty</TableHead>
               <TableHead className="px-4">Payment Status</TableHead>
               <TableHead className="px-4">Action</TableHead>
             </TableRow>
@@ -77,7 +80,7 @@ const MyTicketsTable = ({ tickets }: MyTicketsTableProps) => {
           <TableBody>
             {tickets.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="py-12 text-center text-muted-foreground">
+                <TableCell colSpan={6} className="py-12 text-center text-muted-foreground">
                   No tickets found.
                 </TableCell>
               </TableRow>
@@ -104,6 +107,9 @@ const MyTicketsTable = ({ tickets }: MyTicketsTableProps) => {
                     <TableCell className="px-4 py-3 text-sm text-slate-600">
                       {formatDashboardCurrency(ticket.amount)}
                     </TableCell>
+                    <TableCell className="px-4 py-3 text-sm text-slate-600">
+                      {ticket.ticketQuantity}
+                    </TableCell>
                     <TableCell className="px-4 py-3">
                       <Badge
                         variant={isPaid ? "default" : "secondary"}
@@ -119,7 +125,9 @@ const MyTicketsTable = ({ tickets }: MyTicketsTableProps) => {
                         </Badge>
                       ) : (
                         <Button
-                          onClick={() => handleRepay(ticket.eventId)}
+                          onClick={() =>
+                            handleRepay(ticket.eventId, ticket.ticketQuantity)
+                          }
                           size="sm"
                           disabled={repayingId === ticket.eventId}
                           className="bg-amber-500 hover:bg-amber-600 text-slate-900"

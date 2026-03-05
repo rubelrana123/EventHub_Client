@@ -60,6 +60,9 @@ export async function getParticipatorDashboardData(): Promise<ParticipatorDashbo
         typeof matchedPayment?.amount === "number"
           ? matchedPayment.amount
           : participation.event?.joiningFee || 0;
+      const unitFee = Number(participation.event?.joiningFee || 0);
+      const ticketQuantity =
+        unitFee > 0 ? Math.max(1, Math.round(amount / unitFee)) : 1;
 
       return {
         participationId: participation.id || "",
@@ -73,6 +76,7 @@ export async function getParticipatorDashboardData(): Promise<ParticipatorDashbo
         isBooked: Boolean(participation.isBooked),
         paymentStatus,
         amount,
+        ticketQuantity,
       };
     })
     .filter((item) => item.eventId);

@@ -10,6 +10,7 @@ export interface ParticipatorDashboardEvent {
   isBooked: boolean;
   paymentStatus: string;
   amount: number;
+  ticketQuantity: number;
 }
 
 export interface ParticipatorDashboardSummary {
